@@ -99,6 +99,9 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="imageBoxSecondScreen">
+      <Events>
+        <EventHandler event="mouseMoved" listener="java.awt.event.MouseMotionListener" parameters="java.awt.event.MouseEvent" handler="imageBoxSecondScreenMouseMoved"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JRadioButton" name="acceptPreProcess">
       <Properties>

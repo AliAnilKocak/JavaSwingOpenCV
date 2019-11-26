@@ -5,6 +5,7 @@
  */
 package opencv;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.lang.Math;
 import java.awt.Image;
@@ -17,6 +18,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.SwingUtilities;
 import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
@@ -70,6 +72,12 @@ public class PreProcessScreen extends javax.swing.JFrame {
         });
 
         imagePathTextField.setText("jLabel1");
+
+        imageBoxSecondScreen.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                imageBoxSecondScreenMouseMoved(evt);
+            }
+        });
 
         buttonGroupSecondScreen.add(acceptPreProcess);
         acceptPreProcess.setText("Ön İşleme istiyorum");
@@ -200,11 +208,31 @@ public class PreProcessScreen extends javax.swing.JFrame {
             }
 
         }
-        if (preProcessComboBox.getSelectedIndex() == 3) {//Resmi büyültme küçültme
+        if (preProcessComboBox.getSelectedIndex() == 3) {//Resmi Yeniden boyutlandırma
             try {
                 BufferedImage image = ImageIO.read(new File(imagePath));
                 image = scale(image, Integer.parseInt(widthTextField.getText())/2, Integer.parseInt(heightTextField.getText())/2);
                 imageBoxSecondScreen.setIcon(new ImageIcon(image));
+            } catch (IOException ex) {
+                Logger.getLogger(PreProcessScreen.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+        if (preProcessComboBox.getSelectedIndex() == 4) {//Resim kırpma
+            try {
+                BufferedImage image = ImageIO.read(new File(imagePath));
+                image = cropImage(image, 80, 100, 150, 200);
+                imageBoxSecondScreen.setIcon(new ImageIcon(image));
+            } catch (IOException ex) {
+                Logger.getLogger(PreProcessScreen.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+        if (preProcessComboBox.getSelectedIndex() == 5) {//Histogram
+            try {
+                BufferedImage image = ImageIO.read(new File(imagePath));
+                getHistogram(image);
+                //imageBoxSecondScreen.setIcon(new ImageIcon(image));
             } catch (IOException ex) {
                 Logger.getLogger(PreProcessScreen.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -254,6 +282,10 @@ public class PreProcessScreen extends javax.swing.JFrame {
 
 // TODO add your handling code here:
     }//GEN-LAST:event_reduceMagnificationSliderStateChanged
+
+    private void imageBoxSecondScreenMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_imageBoxSecondScreenMouseMoved
+        System.out.println(evt.getXOnScreen()+" "+evt.getYOnScreen());
+    }//GEN-LAST:event_imageBoxSecondScreenMouseMoved
     public BufferedImage makeGray(BufferedImage img) {
         for (int x = 0; x < img.getWidth(); ++x) {
             for (int y = 0; y < img.getHeight(); ++y) {
@@ -334,6 +366,39 @@ public class PreProcessScreen extends javax.swing.JFrame {
 
     }
 
+    public BufferedImage cropImage(BufferedImage img, int x, int y, int w, int h) {
+        BufferedImage subImgage = img.getSubimage(x, y, w, h);
+        return subImgage;
+    }
+    
+    public void getHistogram(BufferedImage image){
+        try {
+            int iW = image.getWidth();
+            int iH = image.getHeight();
+            int a[][][] = new int[255][255][255];
+
+            for (int i = 0; i < iH; i++) {
+                for (int j = 0; j < iW; j++) {
+                    Color c = new Color(image.getRGB(j, i));
+                    a[c.getRed()][c.getGreen()][c.getBlue()]++;
+
+                }
+            }
+            for (int i = 0; i < 255; i++) {
+                for (int j = 0; j < 255; j++) {
+                    for (int k = 0; k < 255; k++) {
+                        if (a[i][j][k] > 0) {
+                            System.out.println("colour[" + i + "][" + j + "][" + k + "] repeated " + a[i][j][k] + "times \n");
+                            //i->Red j-Green k->Blue                        
+
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+        }
+        
+    }
     /**
      * @param args the command line arguments
      */
