@@ -63,7 +63,7 @@ public class SelectImageScreen extends javax.swing.JFrame {
                 .addGap(53, 53, 53)
                 .addComponent(jLabelImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(626, Short.MAX_VALUE)
+                .addContainerGap(840, Short.MAX_VALUE)
                 .addComponent(NextOnOnePage, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(60, 60, 60))
         );
