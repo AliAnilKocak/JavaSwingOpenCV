@@ -63,6 +63,8 @@ public class PreProcessScreen extends javax.swing.JFrame {
         heightTextField = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        nextButtonOnSecondScreen = new javax.swing.JButton();
+        backButtonOnSecondScreen = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -114,6 +116,12 @@ public class PreProcessScreen extends javax.swing.JFrame {
 
         jLabel2.setText("Yükseklik");
 
+        nextButtonOnSecondScreen.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
+        nextButtonOnSecondScreen.setText("İleri >");
+
+        backButtonOnSecondScreen.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
+        backButtonOnSecondScreen.setText("< Geri");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -140,6 +148,12 @@ public class PreProcessScreen extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(imageBoxSecondScreen, javax.swing.GroupLayout.PREFERRED_SIZE, 748, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(backButtonOnSecondScreen, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(50, 50, 50)
+                .addComponent(nextButtonOnSecondScreen, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -163,7 +177,11 @@ public class PreProcessScreen extends javax.swing.JFrame {
                             .addComponent(jLabel2))
                         .addGap(35, 35, 35)
                         .addComponent(imagePathTextField)))
-                .addContainerGap(130, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(nextButtonOnSecondScreen, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(backButtonOnSecondScreen, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(31, 31, 31))
         );
 
         pack();
@@ -437,6 +455,7 @@ public class PreProcessScreen extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JRadioButton acceptPreProcess;
+    private javax.swing.JButton backButtonOnSecondScreen;
     private javax.swing.ButtonGroup buttonGroupSecondScreen;
     private javax.swing.JRadioButton declinePreProcess;
     private javax.swing.JTextField heightTextField;
@@ -444,6 +463,7 @@ public class PreProcessScreen extends javax.swing.JFrame {
     private javax.swing.JLabel imagePathTextField;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JButton nextButtonOnSecondScreen;
     private javax.swing.JComboBox<String> preProcessComboBox;
     private javax.swing.JSlider reduceMagnificationSlider;
     private javax.swing.JTextField widthTextField;
