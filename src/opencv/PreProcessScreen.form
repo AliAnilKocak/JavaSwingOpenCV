@@ -99,15 +99,19 @@
     <Component class="javax.swing.JComboBox" name="preProcessComboBox">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="5">
-            <StringItem index="0" value="(a) Renkli resmi gri seviye d&#xf6;n&#xfc;&#x15f;t&#xfc;rme"/>
-            <StringItem index="1" value="(b) Resim b&#xfc;y&#xfc;ltme, k&#xfc;&#xe7;&#xfc;ltme"/>
-            <StringItem index="2" value="(c) Resmi yeniden boyutland&#x131;rma"/>
-            <StringItem index="3" value="(d) Resimden istenilen b&#xf6;lgenin kesilip al&#x131;nmas&#x131;"/>
-            <StringItem index="4" value="(e) Histogram olu&#x15f;turma"/>
+          <StringArray count="6">
+            <StringItem index="0" value="Morfolojik &#x130;&#x15f;lem Menusu"/>
+            <StringItem index="1" value="(a) Renkli resmi gri seviye d&#xf6;n&#xfc;&#x15f;t&#xfc;rme"/>
+            <StringItem index="2" value="(b) Resim b&#xfc;y&#xfc;ltme, k&#xfc;&#xe7;&#xfc;ltme"/>
+            <StringItem index="3" value="(c) Resmi yeniden boyutland&#x131;rma"/>
+            <StringItem index="4" value="(d) Resimden istenilen b&#xf6;lgenin kesilip al&#x131;nmas&#x131;"/>
+            <StringItem index="5" value="(e) Histogram olu&#x15f;turma"/>
           </StringArray>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="preProcessComboBoxActionPerformed"/>
+      </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>

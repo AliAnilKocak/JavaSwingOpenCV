@@ -7,13 +7,20 @@ package opencv;
 
 import java.awt.Image;
 import javax.swing.ImageIcon;
+import org.opencv.core.Core;
+import org.opencv.core.CvType;
+import org.opencv.core.Mat;
+import org.opencv.imgcodecs.Imgcodecs;
+import org.opencv.imgproc.Imgproc;
 
 /**
  *
  * @author alian
  */
 public class PreProcessScreen extends javax.swing.JFrame {
- String imagePath;
+
+    String imagePath;
+
     /**
      * Creates new form PreProcessScreen
      */
@@ -61,7 +68,12 @@ public class PreProcessScreen extends javax.swing.JFrame {
             }
         });
 
-        preProcessComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "(a) Renkli resmi gri seviye dönüştürme", "(b) Resim büyültme, küçültme", "(c) Resmi yeniden boyutlandırma", "(d) Resimden istenilen bölgenin kesilip alınması", "(e) Histogram oluşturma" }));
+        preProcessComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Morfolojik İşlem Menusu", "(a) Renkli resmi gri seviye dönüştürme", "(b) Resim büyültme, küçültme", "(c) Resmi yeniden boyutlandırma", "(d) Resimden istenilen bölgenin kesilip alınması", "(e) Histogram oluşturma" }));
+        preProcessComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                preProcessComboBoxActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -101,9 +113,9 @@ public class PreProcessScreen extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        ex.setText(imagePath);       
+        ex.setText(imagePath);
         ImageIcon ii = new ImageIcon(imagePath);
-        imageBoxSecondScreen.setIcon(new ImageIcon(new ImageIcon(imagePath).getImage().getScaledInstance(imageBoxSecondScreen.getWidth(), imageBoxSecondScreen.getHeight(), Image.SCALE_DEFAULT)));        
+        imageBoxSecondScreen.setIcon(new ImageIcon(new ImageIcon(imagePath).getImage().getScaledInstance(imageBoxSecondScreen.getWidth(), imageBoxSecondScreen.getHeight(), Image.SCALE_DEFAULT)));
 // TODO add your handling code here:
     }//GEN-LAST:event_formWindowOpened
 
@@ -111,11 +123,40 @@ public class PreProcessScreen extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_declinePreProcessActionPerformed
 
+    private void preProcessComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_preProcessComboBoxActionPerformed
+
+        System.out.println("Tetiklendi" + preProcessComboBox.getSelectedIndex() + "");
+        String path = imagePath;
+        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+        Mat color = Imgcodecs.
+                imread(path);
+        Mat gray = new Mat();
+        Mat draw = new Mat();
+        Mat wide = new Mat();
+
+        Imgproc.cvtColor(color, gray, Imgproc.COLOR_BGR2GRAY);
+        Imgproc.Canny(gray, wide, 50, 150, 3, false);
+        wide.convertTo(draw, CvType.CV_8U);
+
+        String outputPath = "C:\\Users\\alian\\Documents\\NetBeansProjects\\OpenCVProject\\src\\opencv\\images\\output\\";
+        if (Imgcodecs.imwrite(outputPath + "second.jpg", draw)) ;
+        {
+            ImageIcon ii = new ImageIcon(outputPath + "second.jpg");
+            imageBoxSecondScreen.setIcon(new ImageIcon(
+                    new ImageIcon(outputPath + "second.jpg").getImage()
+                            .getScaledInstance(imageBoxSecondScreen.getWidth(), imageBoxSecondScreen.getHeight(),
+                                    Image.SCALE_DEFAULT)));
+        }
+
+        /* Create and display the form */
+
+    }//GEN-LAST:event_preProcessComboBoxActionPerformed
+
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        
+
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -140,12 +181,13 @@ public class PreProcessScreen extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {;
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            ;
             public void run() {
                 new PreProcessScreen("").setVisible(true);
             }
         });
-       
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
