@@ -20,9 +20,9 @@ import org.opencv.imgproc.Imgproc;
  *
  * @author alian
  */
-public class Pencere extends javax.swing.JFrame {
-
-    public Pencere() {
+public class SelectImageScreen extends javax.swing.JFrame {
+    String selectedImagePath;
+    public SelectImageScreen() {
         initComponents();
         this.setLocationRelativeTo(null); //Ortada açılmasını sağlar
     }
@@ -37,6 +37,7 @@ public class Pencere extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        browseImage.setFont(new java.awt.Font("Consolas", 0, 14)); // NOI18N
         browseImage.setText("Resim Seç");
         browseImage.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -46,6 +47,11 @@ public class Pencere extends javax.swing.JFrame {
 
         NextOnOnePage.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
         NextOnOnePage.setText("İleri >");
+        NextOnOnePage.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                NextOnOnePageActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -53,8 +59,8 @@ public class Pencere extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(browseImage, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(67, 67, 67)
+                .addComponent(browseImage, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(53, 53, 53)
                 .addComponent(jLabelImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(626, Short.MAX_VALUE)
@@ -64,14 +70,14 @@ public class Pencere extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabelImage, javax.swing.GroupLayout.PREFERRED_SIZE, 417, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabelImage, javax.swing.GroupLayout.PREFERRED_SIZE, 417, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(31, 31, 31)
+                        .addComponent(browseImage, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
                 .addComponent(NextOnOnePage, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(24, 24, 24))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(31, 31, 31)
-                .addComponent(browseImage, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -83,13 +89,19 @@ public class Pencere extends javax.swing.JFrame {
         int showOpenDialogue = browseImageFile.showOpenDialog(null);
         if (showOpenDialogue == JFileChooser.APPROVE_OPTION) {
             File selectedImageFile = browseImageFile.getSelectedFile();
-            String selectedImagePath = selectedImageFile.getAbsolutePath();
+             selectedImagePath = selectedImageFile.getAbsolutePath();
             ImageIcon ii = new ImageIcon(selectedImagePath);
             jLabelImage.setIcon(new ImageIcon(new ImageIcon(selectedImagePath).getImage().getScaledInstance(jLabelImage.getWidth(), jLabelImage.getHeight(), Image.SCALE_DEFAULT)));
 
         }
 
     }//GEN-LAST:event_browseImageActionPerformed
+
+    private void NextOnOnePageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NextOnOnePageActionPerformed
+        // TODO add your handling code here:
+        PreProcessScreen preProcessScreen = new PreProcessScreen(selectedImagePath);
+        preProcessScreen.setVisible(true);
+    }//GEN-LAST:event_NextOnOnePageActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -105,14 +117,15 @@ public class Pencere extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Pencere.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SelectImageScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Pencere.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SelectImageScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Pencere.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SelectImageScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Pencere.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SelectImageScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         String path = "C:\\Users\\alian\\Documents\\NetBeansProjects\\OpenCVProject\\src\\opencv\\images\\";
@@ -135,7 +148,7 @@ public class Pencere extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Pencere().setVisible(true);
+                new SelectImageScreen().setVisible(true);
             }
         });
     }
