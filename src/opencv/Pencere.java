@@ -49,16 +49,16 @@ public class Pencere extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(71, 71, 71)
+                .addGap(80, 80, 80)
                 .addComponent(jButton1)
-                .addContainerGap(250, Short.MAX_VALUE))
+                .addContainerGap(241, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(245, Short.MAX_VALUE)
+                .addContainerGap(188, Short.MAX_VALUE)
                 .addComponent(jButton1)
-                .addGap(30, 30, 30))
+                .addGap(87, 87, 87))
         );
 
         pack();
@@ -109,6 +109,7 @@ public class Pencere extends javax.swing.JFrame {
 
         if (Imgcodecs.imwrite(path + "95_edited.jpg", draw)) ;
         {
+            System.out.println("İşlem başarılı.");
             System.out.println("İşlem başarılı.");
         }
         
