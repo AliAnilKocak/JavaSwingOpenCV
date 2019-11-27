@@ -89,7 +89,7 @@ public class FilterScreen extends javax.swing.JFrame {
 
       //  BufferedImage image = sharpenImage("C:\\Users\\alian\\Desktop\\a.png");    // TODO add your handling code here:
         //    imageBoxThirdScreen.setIcon(new ImageIcon(image));
-     //   MyImage myImage = new MyImage(800, 600);
+        MyImage myImage = new MyImage(800, 600);
     //    myImage.readImage("C:\\Users\\alian\\Desktop\\b.png");
      //   myImage = Median.medianFilter(myImage, 3);
     //    imageBoxThirdScreen.setIcon(new ImageIcon(myImage.getImage()));
@@ -101,7 +101,8 @@ public class FilterScreen extends javax.swing.JFrame {
         
         
         try {
-            BufferedImage image = ImageIO.read(new File("C:\\Users\\alian\\Documents\\NetBeansProjects\\OpenCVProject\\src\\opencv\\images\\example.png"));
+            BufferedImage image = ImageIO.read(
+                    new File("C:\\Users\\alian\\Desktop\\a.png"));
             imageBoxThirdScreen.setIcon(new ImageIcon(EdgeDetection.applyEdgeDetection(image, EdgeDetection.maskSobelX)));
         } catch (IOException ex) {
             Logger.getLogger(FilterScreen.class.getName()).log(Level.SEVERE, null, ex);
