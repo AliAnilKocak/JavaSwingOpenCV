@@ -46,7 +46,8 @@ public class FilterScreen extends javax.swing.JFrame {
      * Creates new form FilterScreen
      */
     public FilterScreen(String imagePath) {
-        this.imagePath = imagePath;
+        this.imagePath = "C:\\Users\\alian\\Desktop\\kahve.png";
+        
         initComponents();
         this.setLocationRelativeTo(null);
     }
@@ -123,9 +124,9 @@ public class FilterScreen extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-
+        imageBoxThirdScreen.setIcon(new ImageIcon(sharpenImage(this.imagePath)));
          //BufferedImage image = blurImage("C:\\Users\\alian\\Desktop\\b.png");    // TODO add your handling code here:
-        imageBoxThirdScreen.setIcon(new ImageIcon(blurImage("C:\\Users\\alian\\Desktop\\b.png")));
+       // imageBoxThirdScreen.setIcon(new ImageIcon(blurImage("C:\\Users\\alian\\Desktop\\b.png")));
         //MyImage myImage = new MyImage(800, 600);
            // myImage.readImage("C:\\Users\\alian\\Desktop\\b.png");
           // myImage = Median.medianFilter(myImage, 3);
