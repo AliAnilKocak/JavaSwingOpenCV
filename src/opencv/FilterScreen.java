@@ -10,6 +10,8 @@ import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GraphicsConfiguration;
+import imageFX.ImageFX;
+import imageFX.MyImage;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Image;
@@ -80,9 +82,13 @@ public class FilterScreen extends javax.swing.JFrame {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
 
-        BufferedImage image = sharpenImage("C:\\Users\\alian\\Pictures\\Camera Roll\\WIN_20190821_11_31_33_Pro.jpg");    // TODO add your handling code here:
-        imageBoxThirdScreen.setIcon(new ImageIcon(image));
-
+        BufferedImage image = sharpenImage("C:\\Users\\alian\\Desktop\\b.png");    // TODO add your handling code here:
+        //    imageBoxThirdScreen.setIcon(new ImageIcon(image));
+        MyImage myImage = new MyImage(800, 600, image);
+        myImage.readImage("C:\\Users\\alian\\Desktop\\b.png");
+        myImage = Median.medianFilter(myImage, 3);
+        imageBoxThirdScreen.setIcon(new ImageIcon(myImage.getImage()));
+        
     }//GEN-LAST:event_formWindowOpened
 
     /**
@@ -206,7 +212,8 @@ public class FilterScreen extends javax.swing.JFrame {
         // Create frame with specific title
         return image;
     }
-    public BufferedImage sharpenImage(String imagePath){
+
+    public BufferedImage sharpenImage(String imagePath) {
         ImageObserver myImageObserver = new ImageObserver() {
 
             @Override
