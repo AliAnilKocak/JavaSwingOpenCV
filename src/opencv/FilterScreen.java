@@ -39,12 +39,16 @@ public class FilterScreen extends javax.swing.JFrame {
 
     static BufferedImage image;
     static boolean imageLoaded = false;
+    String imagePath;
+    
 
     /**
      * Creates new form FilterScreen
      */
-    public FilterScreen() {
+    public FilterScreen(String imagePath) {
+        this.imagePath = imagePath;
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -56,7 +60,11 @@ public class FilterScreen extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        filterButtonGroup = new javax.swing.ButtonGroup();
         imageBoxThirdScreen = new javax.swing.JLabel();
+        declineFilter = new javax.swing.JRadioButton();
+        acceptFilter = new javax.swing.JRadioButton();
+        FilterCombobox = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -65,21 +73,50 @@ public class FilterScreen extends javax.swing.JFrame {
             }
         });
 
-        imageBoxThirdScreen.setText("jLabel1");
+        filterButtonGroup.add(declineFilter);
+        declineFilter.setText("Filtreleme uygulamak istemiyorum");
+        declineFilter.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                declineFilterActionPerformed(evt);
+            }
+        });
+
+        filterButtonGroup.add(acceptFilter);
+        acceptFilter.setText("Filtreleme uygulamak istiyorum");
+
+        FilterCombobox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Filtreleme İşlemleri", "(a) Bulanıklaştırma filtresi", "(b) Keskinleştirme filtresi", "(c) Ortanca filtresi", "(d) Laplace filtresi", "(e) Kenar bulma filtresi" }));
+        FilterCombobox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                FilterComboboxActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 309, Short.MAX_VALUE)
-                .addComponent(imageBoxThirdScreen, javax.swing.GroupLayout.PREFERRED_SIZE, 538, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(27, 27, 27)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(declineFilter)
+                    .addComponent(acceptFilter)
+                    .addComponent(FilterCombobox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
+                .addComponent(imageBoxThirdScreen, javax.swing.GroupLayout.PREFERRED_SIZE, 748, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(imageBoxThirdScreen, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 204, Short.MAX_VALUE))
+                .addComponent(imageBoxThirdScreen, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 130, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(75, 75, 75)
+                .addComponent(acceptFilter)
+                .addGap(18, 18, 18)
+                .addComponent(declineFilter)
+                .addGap(49, 49, 49)
+                .addComponent(FilterCombobox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -87,29 +124,66 @@ public class FilterScreen extends javax.swing.JFrame {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
 
-      //  BufferedImage image = sharpenImage("C:\\Users\\alian\\Desktop\\a.png");    // TODO add your handling code here:
-        //    imageBoxThirdScreen.setIcon(new ImageIcon(image));
-        MyImage myImage = new MyImage(800, 600);
-    //    myImage.readImage("C:\\Users\\alian\\Desktop\\b.png");
-     //   myImage = Median.medianFilter(myImage, 3);
-    //    imageBoxThirdScreen.setIcon(new ImageIcon(myImage.getImage()));
-        
-        
-     //   BufferedImage edgeOutput = EdgeDetection.applyEdgeDetection(image, EdgeDetection.maskLaplacian);
-   //     imageBoxThirdScreen.setIcon(new ImageIcon(edgeOutput));
-        
-        
-        
-        try {
-            BufferedImage image = ImageIO.read(
-                    new File("C:\\Users\\alian\\Desktop\\a.png"));
-            imageBoxThirdScreen.setIcon(new ImageIcon(EdgeDetection.applyEdgeDetection(image, EdgeDetection.maskSobelX)));
-        } catch (IOException ex) {
-            Logger.getLogger(FilterScreen.class.getName()).log(Level.SEVERE, null, ex);
-        }
-       
-        
+         //BufferedImage image = blurImage("C:\\Users\\alian\\Desktop\\b.png");    // TODO add your handling code here:
+        imageBoxThirdScreen.setIcon(new ImageIcon(blurImage("C:\\Users\\alian\\Desktop\\b.png")));
+        //MyImage myImage = new MyImage(800, 600);
+           // myImage.readImage("C:\\Users\\alian\\Desktop\\b.png");
+          // myImage = Median.medianFilter(myImage, 3);
+          //  imageBoxThirdScreen.setIcon(new ImageIcon(myImage.getImage()));
+        //   BufferedImage edgeOutput = EdgeDetection.applyEdgeDetection(image, EdgeDetection.maskLaplacian);
+        //     imageBoxThirdScreen.setIcon(new ImageIcon(edgeOutput));
+        // try {
+        //     BufferedImage image = ImageIO.read(
+        //             new File("C:\\Users\\alian\\Desktop\\a.png"));
+        //       imageBoxThirdScreen.setIcon(new ImageIcon(EdgeDetection.applyEdgeDetection(image, EdgeDetection.maskSobelX)));
+        //   } catch (IOException ex) {
+        //       Logger.getLogger(FilterScreen.class.getName()).log(Level.SEVERE, null, ex);
+        //   }
+        //ImageIcon icon = new ImageIcon(imagePath);
+        //imageBoxThirdScreen.setIcon(new ImageIcon(icon.getImage().getScaledInstance(imageBoxThirdScreen.getWidth(), imageBoxThirdScreen.getHeight(), Image.SCALE_DEFAULT)));
+
+
     }//GEN-LAST:event_formWindowOpened
+
+    private void FilterComboboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FilterComboboxActionPerformed
+        System.out.println("Tetiklendi" + FilterCombobox.getSelectedIndex() + "");
+
+        if (FilterCombobox.getSelectedIndex() == 1) {
+            imageBoxThirdScreen.setIcon(new ImageIcon(blurImage(this.imagePath)));
+
+        }
+        if (FilterCombobox.getSelectedIndex() == 2) {
+            BufferedImage image = sharpenImage(this.imagePath);    // TODO add your handling code here:
+            imageBoxThirdScreen.setIcon(new ImageIcon(image));
+        }
+        if (FilterCombobox.getSelectedIndex() == 3) {
+            MyImage myImage = new MyImage(800, 600);
+            myImage.readImage(imagePath);
+            myImage = Median.medianFilter(myImage, 3);
+            imageBoxThirdScreen.setIcon(new ImageIcon(myImage.getImage()));
+        }
+        if (FilterCombobox.getSelectedIndex() == 4) {
+            try {
+                BufferedImage image = ImageIO.read(new File(imagePath));
+                imageBoxThirdScreen.setIcon(new ImageIcon(EdgeDetection.applyEdgeDetection(image, EdgeDetection.maskLaplacian)));
+            } catch (IOException ex) {
+                Logger.getLogger(FilterScreen.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (FilterCombobox.getSelectedIndex() == 5) {
+            try {
+                BufferedImage image = ImageIO.read(new File(imagePath));
+                imageBoxThirdScreen.setIcon(new ImageIcon(EdgeDetection.applyEdgeDetection(image, EdgeDetection.maskSobelX)));
+            } catch (IOException ex) {
+                Logger.getLogger(FilterScreen.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+    }//GEN-LAST:event_FilterComboboxActionPerformed
+
+    private void declineFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_declineFilterActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_declineFilterActionPerformed
 
     /**
      * @param args the command line arguments
@@ -141,12 +215,16 @@ public class FilterScreen extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FilterScreen().setVisible(true);
+                new FilterScreen("").setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> FilterCombobox;
+    private javax.swing.JRadioButton acceptFilter;
+    private javax.swing.JRadioButton declineFilter;
+    private javax.swing.ButtonGroup filterButtonGroup;
     private javax.swing.JLabel imageBoxThirdScreen;
     // End of variables declaration//GEN-END:variables
 

@@ -7,6 +7,9 @@ package opencv;
 
 import java.awt.Image;
 import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -61,9 +64,9 @@ public class SelectImageScreen extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(browseImage, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(53, 53, 53)
-                .addComponent(jLabelImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jLabelImage, javax.swing.GroupLayout.DEFAULT_SIZE, 748, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(840, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(NextOnOnePage, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(60, 60, 60))
         );
@@ -71,7 +74,7 @@ public class SelectImageScreen extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabelImage, javax.swing.GroupLayout.PREFERRED_SIZE, 417, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelImage, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(31, 31, 31)
                         .addComponent(browseImage, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -99,8 +102,14 @@ public class SelectImageScreen extends javax.swing.JFrame {
 
     private void NextOnOnePageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NextOnOnePageActionPerformed
         // TODO add your handling code here:
-        PreProcessScreen preProcessScreen = new PreProcessScreen(selectedImagePath);
+        PreProcessScreen preProcessScreen = null;
+        try {
+            preProcessScreen = new PreProcessScreen(selectedImagePath);
+        } catch (IOException ex) {
+            Logger.getLogger(SelectImageScreen.class.getName()).log(Level.SEVERE, null, ex);
+        }
         preProcessScreen.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_NextOnOnePageActionPerformed
 
     public static void main(String args[]) {

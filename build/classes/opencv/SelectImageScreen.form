@@ -27,10 +27,10 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="browseImage" min="-2" pref="126" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
-              <Component id="jLabelImage" max="32767" attributes="0"/>
+              <Component id="jLabelImage" pref="748" max="32767" attributes="0"/>
           </Group>
           <Group type="102" alignment="1" attributes="0">
-              <EmptySpace pref="840" max="32767" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
               <Component id="NextOnOnePage" min="-2" pref="162" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
           </Group>
@@ -40,7 +40,7 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jLabelImage" min="-2" pref="417" max="-2" attributes="0"/>
+                  <Component id="jLabelImage" min="-2" pref="385" max="-2" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
                       <Component id="browseImage" min="-2" pref="55" max="-2" attributes="0"/>

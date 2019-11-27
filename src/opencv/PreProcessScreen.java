@@ -32,15 +32,27 @@ import org.opencv.imgproc.Imgproc;
 public class PreProcessScreen extends javax.swing.JFrame {
 
     String imagePath;
+    BufferedImage tempImage;
+    String currentImagePath = "src//opencv//images//output//second.png";
 
     /**
      * Creates new form PreProcessScreen
      */
-    public PreProcessScreen(String imagePath) {
+    public PreProcessScreen(String imagePath) throws IOException {
+        File f = new File(imagePath);
+        BufferedImage image = ImageIO.read(f);
+        writeImage(image);
         this.imagePath = imagePath;
         initComponents();
         this.setLocationRelativeTo(null); //Ortada açılmasını sağlar
 
+    }  
+    
+    public void writeImage(BufferedImage image) throws IOException {
+        tempImage = image;
+        BufferedImage bi = tempImage;  // retrieve image
+        File outputfile = new File(currentImagePath);
+        ImageIO.write(bi, "png", outputfile);
     }
 
     /**
@@ -67,6 +79,7 @@ public class PreProcessScreen extends javax.swing.JFrame {
         backButtonOnSecondScreen = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(204, 204, 0));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
@@ -78,6 +91,11 @@ public class PreProcessScreen extends javax.swing.JFrame {
         imageBoxSecondScreen.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseMoved(java.awt.event.MouseEvent evt) {
                 imageBoxSecondScreenMouseMoved(evt);
+            }
+        });
+        imageBoxSecondScreen.addMouseWheelListener(new java.awt.event.MouseWheelListener() {
+            public void mouseWheelMoved(java.awt.event.MouseWheelEvent evt) {
+                imageBoxSecondScreenMouseWheelMoved(evt);
             }
         });
 
@@ -118,6 +136,11 @@ public class PreProcessScreen extends javax.swing.JFrame {
 
         nextButtonOnSecondScreen.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
         nextButtonOnSecondScreen.setText("İleri >");
+        nextButtonOnSecondScreen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nextButtonOnSecondScreenActionPerformed(evt);
+            }
+        });
 
         backButtonOnSecondScreen.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
         backButtonOnSecondScreen.setText("< Geri");
@@ -153,7 +176,7 @@ public class PreProcessScreen extends javax.swing.JFrame {
                 .addComponent(backButtonOnSecondScreen, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(50, 50, 50)
                 .addComponent(nextButtonOnSecondScreen, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26))
+                .addGap(174, 174, 174))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -209,6 +232,10 @@ public class PreProcessScreen extends javax.swing.JFrame {
                 BufferedImage image = ImageIO.read(new File(imagePath));
                 image = makeGray(image);
                 imageBoxSecondScreen.setIcon(new ImageIcon(image));
+                writeImage(image);
+                
+                
+                
             } catch (IOException ex) {
                 Logger.getLogger(PreProcessScreen.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -219,6 +246,8 @@ public class PreProcessScreen extends javax.swing.JFrame {
                 BufferedImage image = ImageIO.read(new File(imagePath));
                 image = scale(image, 300, 200);
                 imageBoxSecondScreen.setIcon(new ImageIcon(image));
+                writeImage(image);
+
             } catch (IOException ex) {
                 Logger.getLogger(PreProcessScreen.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -229,6 +258,8 @@ public class PreProcessScreen extends javax.swing.JFrame {
                 BufferedImage image = ImageIO.read(new File(imagePath));
                 image = scale(image, Integer.parseInt(widthTextField.getText()) / 2, Integer.parseInt(heightTextField.getText()) / 2);
                 imageBoxSecondScreen.setIcon(new ImageIcon(image));
+                writeImage(image);
+
             } catch (IOException ex) {
                 Logger.getLogger(PreProcessScreen.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -239,6 +270,8 @@ public class PreProcessScreen extends javax.swing.JFrame {
                 BufferedImage image = ImageIO.read(new File(imagePath));
                 image = cropImage(image, 80, 100, 150, 200);
                 imageBoxSecondScreen.setIcon(new ImageIcon(image));
+                writeImage(image);
+
             } catch (IOException ex) {
                 Logger.getLogger(PreProcessScreen.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -301,6 +334,53 @@ public class PreProcessScreen extends javax.swing.JFrame {
     private void imageBoxSecondScreenMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_imageBoxSecondScreenMouseMoved
         System.out.println(evt.getXOnScreen() + " " + evt.getYOnScreen());
     }//GEN-LAST:event_imageBoxSecondScreenMouseMoved
+
+    private void nextButtonOnSecondScreenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextButtonOnSecondScreenActionPerformed
+        try {
+            writeImage(tempImage);
+        } catch (IOException ex) {
+            Logger.getLogger(PreProcessScreen.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        FilterScreen filterScreen = new FilterScreen(currentImagePath);
+        filterScreen.setVisible(true);
+        this.setVisible(false);
+
+    }//GEN-LAST:event_nextButtonOnSecondScreenActionPerformed
+
+    private void imageBoxSecondScreenMouseWheelMoved(java.awt.event.MouseWheelEvent evt) {//GEN-FIRST:event_imageBoxSecondScreenMouseWheelMoved
+
+         /*   if (evt.getWheelRotation() < 0) {
+                try {
+                    BufferedImage image;
+                    int width, height;
+                    image = ImageIO.read(new File(imagePath));
+                    width = image.getWidth() + 4;
+                    height = image.getHeight() +4;
+                    imagePathTextField.setText(width + " " + height);
+                    image = scale(image, width, height);
+                    imageBoxSecondScreen.setIcon(new ImageIcon(image));
+
+                } catch (IOException ex) {
+                    Logger.getLogger(PreProcessScreen.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else {
+                try {
+                    BufferedImage image;
+                    int width, height;
+                    image = ImageIO.read(new File(imagePath));
+                    width = image.getWidth() - 4;
+                    height = image.getHeight() - 4;
+                    imagePathTextField.setText(width + " " + height);
+                    image = scale(image, width, height);
+                    imageBoxSecondScreen.setIcon(new ImageIcon(image));
+
+                } catch (IOException ex) {
+                    Logger.getLogger(PreProcessScreen.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+*/
+        // TODO add your handling code here:
+    }//GEN-LAST:event_imageBoxSecondScreenMouseWheelMoved
     public BufferedImage makeGray(BufferedImage img) {
         for (int x = 0; x < img.getWidth(); ++x) {
             for (int y = 0; y < img.getHeight(); ++y) {
@@ -447,7 +527,11 @@ public class PreProcessScreen extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             ;
             public void run() {
-                new PreProcessScreen("").setVisible(true);
+                try {
+                    new PreProcessScreen("").setVisible(true);
+                } catch (IOException ex) {
+                    Logger.getLogger(PreProcessScreen.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
 

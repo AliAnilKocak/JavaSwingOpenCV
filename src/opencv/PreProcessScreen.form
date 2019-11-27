@@ -7,6 +7,9 @@
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
+    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+      <Color blue="0" green="cc" red="cc" type="rgb"/>
+    </Property>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
@@ -63,7 +66,7 @@
               <Component id="backButtonOnSecondScreen" min="-2" pref="128" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
               <Component id="nextButtonOnSecondScreen" min="-2" pref="127" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="174" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -111,6 +114,7 @@
     <Component class="javax.swing.JLabel" name="imageBoxSecondScreen">
       <Events>
         <EventHandler event="mouseMoved" listener="java.awt.event.MouseMotionListener" parameters="java.awt.event.MouseEvent" handler="imageBoxSecondScreenMouseMoved"/>
+        <EventHandler event="mouseWheelMoved" listener="java.awt.event.MouseWheelListener" parameters="java.awt.event.MouseWheelEvent" handler="imageBoxSecondScreenMouseWheelMoved"/>
       </Events>
     </Component>
     <Component class="javax.swing.JRadioButton" name="acceptPreProcess">
@@ -189,6 +193,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="&#x130;leri &gt;"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="nextButtonOnSecondScreenActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="backButtonOnSecondScreen">
       <Properties>
