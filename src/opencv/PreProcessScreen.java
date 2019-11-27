@@ -227,7 +227,7 @@ public class PreProcessScreen extends javax.swing.JFrame {
         if (preProcessComboBox.getSelectedIndex() == 3) {//Resmi Yeniden boyutlandırma
             try {
                 BufferedImage image = ImageIO.read(new File(imagePath));
-                image = scale(image, Integer.parseInt(widthTextField.getText())/2, Integer.parseInt(heightTextField.getText())/2);
+                image = scale(image, Integer.parseInt(widthTextField.getText()) / 2, Integer.parseInt(heightTextField.getText()) / 2);
                 imageBoxSecondScreen.setIcon(new ImageIcon(image));
             } catch (IOException ex) {
                 Logger.getLogger(PreProcessScreen.class.getName()).log(Level.SEVERE, null, ex);
@@ -280,7 +280,6 @@ public class PreProcessScreen extends javax.swing.JFrame {
  /* Create and display the form */
 
     }//GEN-LAST:event_preProcessComboBoxActionPerformed
-
     private void reduceMagnificationSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_reduceMagnificationSliderStateChanged
         try {
             BufferedImage image;
@@ -291,7 +290,7 @@ public class PreProcessScreen extends javax.swing.JFrame {
             imagePathTextField.setText(width + " " + height);
             image = scale(image, width, height);
             imageBoxSecondScreen.setIcon(new ImageIcon(image));
-          
+
         } catch (IOException ex) {
             Logger.getLogger(PreProcessScreen.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -300,7 +299,7 @@ public class PreProcessScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_reduceMagnificationSliderStateChanged
 
     private void imageBoxSecondScreenMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_imageBoxSecondScreenMouseMoved
-        System.out.println(evt.getXOnScreen()+" "+evt.getYOnScreen());
+        System.out.println(evt.getXOnScreen() + " " + evt.getYOnScreen());
     }//GEN-LAST:event_imageBoxSecondScreenMouseMoved
     public BufferedImage makeGray(BufferedImage img) {
         for (int x = 0; x < img.getWidth(); ++x) {
@@ -386,8 +385,8 @@ public class PreProcessScreen extends javax.swing.JFrame {
         BufferedImage subImgage = img.getSubimage(x, y, w, h);
         return subImgage;
     }
-    
-    public void getHistogram(BufferedImage image){
+
+    public void getHistogram(BufferedImage image) {
         try {
             int iW = image.getWidth();
             int iH = image.getHeight();
@@ -413,8 +412,9 @@ public class PreProcessScreen extends javax.swing.JFrame {
             }
         } catch (Exception e) {
         }
-        
+
     }
+
     /**
      * @param args the command line arguments
      */
