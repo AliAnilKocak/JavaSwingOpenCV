@@ -128,10 +128,10 @@ public class SelectImageScreen extends javax.swing.JFrame {
         //</editor-fold>
         //</editor-fold>
 
-        String path = "C:\\Users\\alian\\Documents\\NetBeansProjects\\OpenCVProject\\src\\opencv\\images\\";
+       /* String path = "C:\\Users\\alian\\Desktop\\anil.jpg";
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
         Mat color = Imgcodecs.
-                imread(path + "95.jpg");
+                imread(path);
         Mat gray = new Mat();
         Mat draw = new Mat();
         Mat wide = new Mat();
@@ -140,11 +140,11 @@ public class SelectImageScreen extends javax.swing.JFrame {
         Imgproc.Canny(gray, wide, 50, 150, 3, false);
         wide.convertTo(draw, CvType.CV_8U);
 
-        if (Imgcodecs.imwrite(path + "95_edited.jpg", draw)) ;
+        if (Imgcodecs.imwrite("C:\\Users\\alian\\Desktop\\anil22.jpg", draw)) ;
         {
             System.out.println("İşlem başarılı.");
         }
-
+*/
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
