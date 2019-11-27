@@ -84,7 +84,7 @@ public class FilterScreen extends javax.swing.JFrame {
 
         BufferedImage image = sharpenImage("C:\\Users\\alian\\Desktop\\b.png");    // TODO add your handling code here:
         //    imageBoxThirdScreen.setIcon(new ImageIcon(image));
-        MyImage myImage = new MyImage(800, 600, image);
+        MyImage myImage = new MyImage(800, 600);
         myImage.readImage("C:\\Users\\alian\\Desktop\\b.png");
         myImage = Median.medianFilter(myImage, 3);
         imageBoxThirdScreen.setIcon(new ImageIcon(myImage.getImage()));

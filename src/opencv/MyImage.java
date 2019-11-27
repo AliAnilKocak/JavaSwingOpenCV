@@ -63,12 +63,6 @@ public class MyImage {
     };
     
     private ImageType imgType;
-
-    public BufferedImage getImage() {
-        return image;
-    }
-
- 
     
     ////////////////////////////////// CONSTRUCTORS ////////////////////////////
     
@@ -81,12 +75,12 @@ public class MyImage {
      * @param width width of the image passed by the user
      * @param height height of the image passed by the user
      */
-    public MyImage(int width, int height,BufferedImage image){
+    public MyImage(int width, int height){
         this.width = width;
         this.height = height;
         this.totalPixels = this.width * this.height;
         this.pixels = new int[this.totalPixels];
-        this.image = image;
+        image = new BufferedImage(this.width, this.height, BufferedImage.TYPE_INT_ARGB);
         this.imgType = ImageType.PNG;
         initPixelArray();
     }
@@ -167,6 +161,10 @@ public class MyImage {
         }catch(IOException e){
             System.out.println("Error Occurred!\n"+e);
         }
+    }
+
+    public BufferedImage getImage() {
+        return image;
     }
     
     /**
