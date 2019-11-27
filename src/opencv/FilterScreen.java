@@ -23,6 +23,11 @@ import java.awt.image.ConvolveOp;
 import java.awt.image.ImageObserver;
 import static java.awt.image.ImageObserver.ALLBITS;
 import java.awt.image.Kernel;
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import static opencv.BufferedImageBlur.imageLoaded;
 
@@ -82,12 +87,26 @@ public class FilterScreen extends javax.swing.JFrame {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
 
-        BufferedImage image = sharpenImage("C:\\Users\\alian\\Desktop\\b.png");    // TODO add your handling code here:
+      //  BufferedImage image = sharpenImage("C:\\Users\\alian\\Desktop\\a.png");    // TODO add your handling code here:
         //    imageBoxThirdScreen.setIcon(new ImageIcon(image));
-        MyImage myImage = new MyImage(800, 600);
-        myImage.readImage("C:\\Users\\alian\\Desktop\\b.png");
-        myImage = Median.medianFilter(myImage, 3);
-        imageBoxThirdScreen.setIcon(new ImageIcon(myImage.getImage()));
+     //   MyImage myImage = new MyImage(800, 600);
+    //    myImage.readImage("C:\\Users\\alian\\Desktop\\b.png");
+     //   myImage = Median.medianFilter(myImage, 3);
+    //    imageBoxThirdScreen.setIcon(new ImageIcon(myImage.getImage()));
+        
+        
+     //   BufferedImage edgeOutput = EdgeDetection.applyEdgeDetection(image, EdgeDetection.maskLaplacian);
+   //     imageBoxThirdScreen.setIcon(new ImageIcon(edgeOutput));
+        
+        
+        
+        try {
+            BufferedImage image = ImageIO.read(new File("C:\\Users\\alian\\Documents\\NetBeansProjects\\OpenCVProject\\src\\opencv\\images\\example.png"));
+            imageBoxThirdScreen.setIcon(new ImageIcon(EdgeDetection.applyEdgeDetection(image, EdgeDetection.maskSobelX)));
+        } catch (IOException ex) {
+            Logger.getLogger(FilterScreen.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       
         
     }//GEN-LAST:event_formWindowOpened
 
