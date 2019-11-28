@@ -82,6 +82,8 @@ public class FilterScreen extends javax.swing.JFrame {
         declineFilter = new javax.swing.JRadioButton();
         acceptFilter = new javax.swing.JRadioButton();
         FilterCombobox = new javax.swing.JComboBox<>();
+        nextButtonOnThirdScreen = new javax.swing.JButton();
+        backButtonOnThirdScreen = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -108,6 +110,18 @@ public class FilterScreen extends javax.swing.JFrame {
             }
         });
 
+        nextButtonOnThirdScreen.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
+        nextButtonOnThirdScreen.setText("İleri >");
+        nextButtonOnThirdScreen.setToolTipText("");
+        nextButtonOnThirdScreen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nextButtonOnThirdScreenActionPerformed(evt);
+            }
+        });
+
+        backButtonOnThirdScreen.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
+        backButtonOnThirdScreen.setText("< Geri");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -120,12 +134,22 @@ public class FilterScreen extends javax.swing.JFrame {
                     .addComponent(FilterCombobox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
                 .addComponent(imageBoxThirdScreen, javax.swing.GroupLayout.PREFERRED_SIZE, 748, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(backButtonOnThirdScreen, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(90, 90, 90)
+                .addComponent(nextButtonOnThirdScreen, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(39, 39, 39))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(imageBoxThirdScreen, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 130, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(nextButtonOnThirdScreen, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(backButtonOnThirdScreen, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(32, 32, 32))
             .addGroup(layout.createSequentialGroup()
                 .addGap(75, 75, 75)
                 .addComponent(acceptFilter)
@@ -137,6 +161,7 @@ public class FilterScreen extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
@@ -219,6 +244,17 @@ public class FilterScreen extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_declineFilterActionPerformed
 
+    private void nextButtonOnThirdScreenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextButtonOnThirdScreenActionPerformed
+       /* try {
+            writeImage(tempImage);
+        } catch (IOException ex) {
+            Logger.getLogger(PreProcessScreen.class.getName()).log(Level.SEVERE, null, ex);
+        }*/
+        MorphologicalOperation morphologicalOperation = new MorphologicalOperation(currentImagePath);
+        morphologicalOperation.setVisible(true);
+        this.setVisible(false);        // TODO add your handling code here:
+    }//GEN-LAST:event_nextButtonOnThirdScreenActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -257,9 +293,11 @@ public class FilterScreen extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> FilterCombobox;
     private javax.swing.JRadioButton acceptFilter;
+    private javax.swing.JButton backButtonOnThirdScreen;
     private javax.swing.JRadioButton declineFilter;
     private javax.swing.ButtonGroup filterButtonGroup;
     private javax.swing.JLabel imageBoxThirdScreen;
+    private javax.swing.JButton nextButtonOnThirdScreen;
     // End of variables declaration//GEN-END:variables
 
     public BufferedImage blurImage(String imagePath) {
