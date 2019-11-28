@@ -40,16 +40,32 @@ public class FilterScreen extends javax.swing.JFrame {
     static BufferedImage image;
     static boolean imageLoaded = false;
     String imagePath;
-    
+    String currentImagePath = "src//opencv//images//output//third.png";
 
     /**
      * Creates new form FilterScreen
      */
     public FilterScreen(String imagePath) {
-        this.imagePath = "C:\\Users\\alian\\Desktop\\kahve.png";
-        
+        this.imagePath = imagePath;
         initComponents();
+
+        try {
+            File f = new File(imagePath);
+            BufferedImage image;
+            image = ImageIO.read(f);
+            writeImage(image);
+            imageBoxThirdScreen.setIcon(new ImageIcon(image));
+        } catch (IOException ex) {
+            Logger.getLogger(FilterScreen.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        System.out.println(this.imagePath);
         this.setLocationRelativeTo(null);
+    }
+
+    public void writeImage(BufferedImage image) throws IOException {
+        File outputfile = new File(currentImagePath);
+        ImageIO.write(image, "png", outputfile);
     }
 
     /**
@@ -124,13 +140,13 @@ public class FilterScreen extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        imageBoxThirdScreen.setIcon(new ImageIcon(sharpenImage(this.imagePath)));
-         //BufferedImage image = blurImage("C:\\Users\\alian\\Desktop\\b.png");    // TODO add your handling code here:
-       // imageBoxThirdScreen.setIcon(new ImageIcon(blurImage("C:\\Users\\alian\\Desktop\\b.png")));
+        // imageBoxThirdScreen.setIcon(new ImageIcon(sharpenImage(this.imagePath)));
+        //BufferedImage image = blurImage("C:\\Users\\alian\\Desktop\\b.png");    // TODO add your handling code here:
+        // imageBoxThirdScreen.setIcon(new ImageIcon(blurImage("C:\\Users\\alian\\Desktop\\b.png")));
         //MyImage myImage = new MyImage(800, 600);
-           // myImage.readImage("C:\\Users\\alian\\Desktop\\b.png");
-          // myImage = Median.medianFilter(myImage, 3);
-          //  imageBoxThirdScreen.setIcon(new ImageIcon(myImage.getImage()));
+        // myImage.readImage("C:\\Users\\alian\\Desktop\\b.png");
+        // myImage = Median.medianFilter(myImage, 3);
+        //  imageBoxThirdScreen.setIcon(new ImageIcon(myImage.getImage()));
         //   BufferedImage edgeOutput = EdgeDetection.applyEdgeDetection(image, EdgeDetection.maskLaplacian);
         //     imageBoxThirdScreen.setIcon(new ImageIcon(edgeOutput));
         // try {
@@ -151,22 +167,38 @@ public class FilterScreen extends javax.swing.JFrame {
 
         if (FilterCombobox.getSelectedIndex() == 1) {
             imageBoxThirdScreen.setIcon(new ImageIcon(blurImage(this.imagePath)));
+            try {
+                writeImage(blurImage(this.imagePath));
+            } catch (IOException ex) {
+                Logger.getLogger(FilterScreen.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
         }
         if (FilterCombobox.getSelectedIndex() == 2) {
             BufferedImage image = sharpenImage(this.imagePath);    // TODO add your handling code here:
             imageBoxThirdScreen.setIcon(new ImageIcon(image));
+            try {
+                writeImage(image);
+            } catch (IOException ex) {
+                Logger.getLogger(FilterScreen.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         if (FilterCombobox.getSelectedIndex() == 3) {
             MyImage myImage = new MyImage(800, 600);
             myImage.readImage(imagePath);
             myImage = Median.medianFilter(myImage, 3);
             imageBoxThirdScreen.setIcon(new ImageIcon(myImage.getImage()));
+            try {
+                writeImage(myImage.getImage());
+            } catch (IOException ex) {
+                Logger.getLogger(FilterScreen.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         if (FilterCombobox.getSelectedIndex() == 4) {
             try {
                 BufferedImage image = ImageIO.read(new File(imagePath));
                 imageBoxThirdScreen.setIcon(new ImageIcon(EdgeDetection.applyEdgeDetection(image, EdgeDetection.maskLaplacian)));
+                writeImage(EdgeDetection.applyEdgeDetection(image, EdgeDetection.maskLaplacian));
             } catch (IOException ex) {
                 Logger.getLogger(FilterScreen.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -175,6 +207,7 @@ public class FilterScreen extends javax.swing.JFrame {
             try {
                 BufferedImage image = ImageIO.read(new File(imagePath));
                 imageBoxThirdScreen.setIcon(new ImageIcon(EdgeDetection.applyEdgeDetection(image, EdgeDetection.maskSobelX)));
+                writeImage(EdgeDetection.applyEdgeDetection(image, EdgeDetection.maskSobelX));
             } catch (IOException ex) {
                 Logger.getLogger(FilterScreen.class.getName()).log(Level.SEVERE, null, ex);
             }
