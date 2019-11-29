@@ -96,6 +96,9 @@
         </Property>
         <Property name="label" type="java.lang.String" value="&#x130;leri &gt;"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="nextButtonOnFourthScreenActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="backButtonOnFourthScreen">
       <Properties>
@@ -117,6 +120,9 @@
           </StringArray>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="MorphologicalOperationsComboboxActionPerformed"/>
+      </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>

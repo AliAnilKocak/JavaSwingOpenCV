@@ -23,6 +23,7 @@ public class MorphologicalOperation extends javax.swing.JFrame {
     static boolean imageLoaded = false;
     String imagePath;
     String currentImagePath = "src//opencv//images//output//fourth.png";
+    String tempImageProcessPath = "D://harf.png";
     /**
      * Creates new form MorphologicalOperation
      */
@@ -32,6 +33,16 @@ public class MorphologicalOperation extends javax.swing.JFrame {
         initComponents();
 
         try {
+            //init image proces
+          /*  File fileExample = new File(tempImageProcessPath);
+            BufferedImage imageTemp  = ImageIO.read(fileExample);
+            //init image process
+            imageBoxFourthScreen.setIcon(new ImageIcon(imageTemp));
+            */
+            
+            
+            
+            
             File f = new File(imagePath);
             BufferedImage image;
             image = ImageIO.read(f);
@@ -75,11 +86,21 @@ public class MorphologicalOperation extends javax.swing.JFrame {
 
         nextButtonOnFourthScreen.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
         nextButtonOnFourthScreen.setLabel("İleri >");
+        nextButtonOnFourthScreen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nextButtonOnFourthScreenActionPerformed(evt);
+            }
+        });
 
         backButtonOnFourthScreen.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
         backButtonOnFourthScreen.setLabel("< Geri");
 
         MorphologicalOperationsCombobox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Morfolojik İşlemler", "Siyah beyaz resimde genişletme", "Siyah beyaz resimde erozyon", "Siyah beyaz resimde açma", "Siyah beyaz resimde kapama" }));
+        MorphologicalOperationsCombobox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MorphologicalOperationsComboboxActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -121,6 +142,74 @@ public class MorphologicalOperation extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void MorphologicalOperationsComboboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MorphologicalOperationsComboboxActionPerformed
+        System.out.println("Tetiklendi" + MorphologicalOperationsCombobox.getSelectedIndex() + "");
+
+        if (MorphologicalOperationsCombobox.getSelectedIndex() == 1) {
+            
+            
+            imageFX.MyImage myImage = new imageFX.MyImage(800, 600);
+            myImage.readImage(imagePath);
+            myImage = Dilation.grayscaleImage(myImage);
+            imageBoxFourthScreen.setIcon(new ImageIcon(myImage.getImage()));
+            try {
+                writeImage(myImage.getImage());
+            } catch (IOException ex) {
+                Logger.getLogger(MorphologicalOperation.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        
+
+        }        // TODO add your handling code here:
+        if (MorphologicalOperationsCombobox.getSelectedIndex() == 2) {
+            
+            
+            imageFX.MyImage myImage = new imageFX.MyImage(800, 600);
+            myImage.readImage(imagePath);
+            myImage = Erosion.grayscaleImage(myImage);
+            imageBoxFourthScreen.setIcon(new ImageIcon(myImage.getImage()));
+            try {
+                writeImage(myImage.getImage());
+            } catch (IOException ex) {
+                Logger.getLogger(MorphologicalOperation.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }        // TODO add your handling code here:
+        if (MorphologicalOperationsCombobox.getSelectedIndex() == 3) {
+            
+            
+            imageFX.MyImage myImage = new imageFX.MyImage(800, 600);
+            myImage.readImage(imagePath);
+            myImage = Dilation.binaryImage(Erosion.binaryImage(myImage, true), true);
+            imageBoxFourthScreen.setIcon(new ImageIcon(myImage.getImage()));
+            try {
+                writeImage(myImage.getImage());
+            } catch (IOException ex) {
+                Logger.getLogger(MorphologicalOperation.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }        // TODO add your handling code here:
+        if (MorphologicalOperationsCombobox.getSelectedIndex() == 4) {
+            
+            
+            imageFX.MyImage myImage = new imageFX.MyImage(800, 600);
+            myImage.readImage(imagePath);
+            myImage = Erosion.binaryImage(Dilation.binaryImage(myImage, true), false);
+            imageBoxFourthScreen.setIcon(new ImageIcon(myImage.getImage()));
+            try {
+                writeImage(myImage.getImage());
+            } catch (IOException ex) {
+                Logger.getLogger(MorphologicalOperation.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_MorphologicalOperationsComboboxActionPerformed
+
+    private void nextButtonOnFourthScreenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextButtonOnFourthScreenActionPerformed
+        SegmentationScreen segmentationScreen = new SegmentationScreen(currentImagePath);
+        segmentationScreen.setVisible(true);
+        this.setVisible(false);              // TODO add your handling code here:
+    }//GEN-LAST:event_nextButtonOnFourthScreenActionPerformed
 
     /**
      * @param args the command line arguments
