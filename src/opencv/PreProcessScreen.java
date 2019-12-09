@@ -454,7 +454,7 @@ public class PreProcessScreen extends javax.swing.JFrame {
             int iH = image.getHeight();
             int a[][][] = new int[255][255][255];
 
-            for (int i = 0; i < iH; i++) {
+            for (int i = 0; i < iH; i++) { //a çok boyutlu dizinin renklerini doldurur
                 for (int j = 0; j < iW; j++) {
                     Color c = new Color(image.getRGB(j, i));
                     a[c.getRed()][c.getGreen()][c.getBlue()]++;
@@ -482,11 +482,6 @@ public class PreProcessScreen extends javax.swing.JFrame {
      */
     public static void main(String args[]) {
 
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
