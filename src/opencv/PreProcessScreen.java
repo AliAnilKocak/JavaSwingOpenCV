@@ -46,8 +46,8 @@ public class PreProcessScreen extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null); //Ortada açılmasını sağlar
 
-    }  
-    
+    }
+
     public void writeImage(BufferedImage image) throws IOException {
         tempImage = image;
         BufferedImage bi = tempImage;  // retrieve image
@@ -73,8 +73,6 @@ public class PreProcessScreen extends javax.swing.JFrame {
         reduceMagnificationSlider = new javax.swing.JSlider();
         widthTextField = new javax.swing.JTextField();
         heightTextField = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         nextButtonOnSecondScreen = new javax.swing.JButton();
         backButtonOnSecondScreen = new javax.swing.JButton();
 
@@ -101,6 +99,11 @@ public class PreProcessScreen extends javax.swing.JFrame {
 
         buttonGroupSecondScreen.add(acceptPreProcess);
         acceptPreProcess.setText("Ön İşleme istiyorum");
+        acceptPreProcess.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                acceptPreProcessActionPerformed(evt);
+            }
+        });
 
         buttonGroupSecondScreen.add(declinePreProcess);
         declinePreProcess.setSelected(true);
@@ -130,10 +133,6 @@ public class PreProcessScreen extends javax.swing.JFrame {
 
         heightTextField.setText("jTextField2");
 
-        jLabel1.setText("Genişlik");
-
-        jLabel2.setText("Yükseklik");
-
         nextButtonOnSecondScreen.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
         nextButtonOnSecondScreen.setText("İleri >");
         nextButtonOnSecondScreen.addActionListener(new java.awt.event.ActionListener() {
@@ -144,73 +143,96 @@ public class PreProcessScreen extends javax.swing.JFrame {
 
         backButtonOnSecondScreen.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
         backButtonOnSecondScreen.setText("< Geri");
+        backButtonOnSecondScreen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backButtonOnSecondScreenActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(widthTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(heightTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap(17, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(imagePathTextField)
+                                .addGap(239, 239, 239))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(preProcessComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18))))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(acceptPreProcess)
-                                .addComponent(declinePreProcess)
-                                .addComponent(preProcessComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(reduceMagnificationSlider, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(imagePathTextField))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(imageBoxSecondScreen, javax.swing.GroupLayout.PREFERRED_SIZE, 748, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(60, 60, 60)
+                                .addComponent(widthTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(heightTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addContainerGap()
+                                        .addComponent(reduceMagnificationSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(12, 12, 12)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(declinePreProcess)
+                                            .addComponent(acceptPreProcess))))
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                .addComponent(imageBoxSecondScreen, javax.swing.GroupLayout.PREFERRED_SIZE, 748, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(7, 7, 7))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(backButtonOnSecondScreen, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(50, 50, 50)
+                .addGap(18, 18, 18)
                 .addComponent(nextButtonOnSecondScreen, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(174, 174, 174))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(imageBoxSecondScreen, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(64, 64, 64)
                         .addComponent(acceptPreProcess)
                         .addGap(18, 18, 18)
                         .addComponent(declinePreProcess)
-                        .addGap(37, 37, 37)
+                        .addGap(38, 38, 38)
                         .addComponent(preProcessComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(31, 31, 31)
+                        .addGap(35, 35, 35)
                         .addComponent(reduceMagnificationSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(41, 41, 41)
+                        .addGap(43, 43, 43)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(widthTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(heightTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2))
-                        .addGap(35, 35, 35)
-                        .addComponent(imagePathTextField)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
+                            .addComponent(heightTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(39, 39, 39)
+                        .addComponent(imagePathTextField))
+                    .addComponent(imageBoxSecondScreen, javax.swing.GroupLayout.PREFERRED_SIZE, 429, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(nextButtonOnSecondScreen, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(backButtonOnSecondScreen, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(31, 31, 31))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+
+        if (declinePreProcess.isSelected()) {
+            preProcessComboBox.setEnabled(false);
+            reduceMagnificationSlider.setEnabled(false);
+            widthTextField.setVisible(false);
+            heightTextField.setVisible(false);
+            imagePathTextField.setVisible(false);
+
+        }
+
         imagePathTextField.setText(imagePath);
         ImageIcon icon = new ImageIcon(imagePath);
         imageBoxSecondScreen.setIcon(new ImageIcon(icon.getImage().getScaledInstance(imageBoxSecondScreen.getWidth(), imageBoxSecondScreen.getHeight(), Image.SCALE_DEFAULT)));
@@ -220,12 +242,17 @@ public class PreProcessScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowOpened
 
     private void declinePreProcessActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_declinePreProcessActionPerformed
-        // TODO add your handling code here:
+        if (declinePreProcess.isSelected()) {
+            preProcessComboBox.setEnabled(false);
+            reduceMagnificationSlider.setEnabled(false);
+            widthTextField.setVisible(false);
+            heightTextField.setVisible(false);
+            imagePathTextField.setVisible(false);
+
+        }        // TODO add your handling code here:
     }//GEN-LAST:event_declinePreProcessActionPerformed
 
     private void preProcessComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_preProcessComboBoxActionPerformed
-
-        System.out.println("Tetiklendi" + preProcessComboBox.getSelectedIndex() + "");
 
         if (preProcessComboBox.getSelectedIndex() == 1) {//Gri resim oluşturma
             try {
@@ -233,9 +260,7 @@ public class PreProcessScreen extends javax.swing.JFrame {
                 image = makeGray(image);
                 imageBoxSecondScreen.setIcon(new ImageIcon(image));
                 writeImage(image);
-                
-                
-                
+
             } catch (IOException ex) {
                 Logger.getLogger(PreProcessScreen.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -281,36 +306,13 @@ public class PreProcessScreen extends javax.swing.JFrame {
             try {
                 BufferedImage image = ImageIO.read(new File(imagePath));
                 getHistogram(image);
-                //imageBoxSecondScreen.setIcon(new ImageIcon(image));
+
             } catch (IOException ex) {
                 Logger.getLogger(PreProcessScreen.class.getName()).log(Level.SEVERE, null, ex);
             }
 
         }
 
-        /*    String path = imagePath;
-        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-        Mat color = Imgcodecs.
-                imread(path);
-        Mat gray = new Mat();
-        Mat draw = new Mat();
-        Mat wide = new Mat();
-
-        Imgproc.cvtColor(color, gray, Imgproc.COLOR_BGR2GRAY);
-        Imgproc.Canny(gray, wide, 50, 150, 3, false);
-        wide.convertTo(draw, CvType.CV_8U);
-
-        String outputPath = "C:\\Users\\alian\\Documents\\NetBeansProjects\\OpenCVProject\\src\\opencv\\images\\output\\";
-        if (Imgcodecs.imwrite(outputPath + "second.jpg", draw)) ;
-        {
-            ImageIcon ii = new ImageIcon(outputPath + "second.jpg");
-            imageBoxSecondScreen.setIcon(new ImageIcon(
-                    new ImageIcon(outputPath + "second.jpg").getImage()
-                            .getScaledInstance(imageBoxSecondScreen.getWidth(), imageBoxSecondScreen.getHeight(),
-                                    Image.SCALE_DEFAULT)));
-        }*/
-
- /* Create and display the form */
 
     }//GEN-LAST:event_preProcessComboBoxActionPerformed
     private void reduceMagnificationSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_reduceMagnificationSliderStateChanged
@@ -320,7 +322,7 @@ public class PreProcessScreen extends javax.swing.JFrame {
             image = ImageIO.read(new File(imagePath));
             width = reduceMagnificationSlider.getValue() * image.getWidth() / 25;
             height = reduceMagnificationSlider.getValue() * image.getHeight() / 25;
-            imagePathTextField.setText(width + " " + height);
+
             image = scale(image, width, height);
             imageBoxSecondScreen.setIcon(new ImageIcon(image));
 
@@ -349,65 +351,44 @@ public class PreProcessScreen extends javax.swing.JFrame {
 
     private void imageBoxSecondScreenMouseWheelMoved(java.awt.event.MouseWheelEvent evt) {//GEN-FIRST:event_imageBoxSecondScreenMouseWheelMoved
 
-         /*   if (evt.getWheelRotation() < 0) {
-                try {
-                    BufferedImage image;
-                    int width, height;
-                    image = ImageIO.read(new File(imagePath));
-                    width = image.getWidth() + 4;
-                    height = image.getHeight() +4;
-                    imagePathTextField.setText(width + " " + height);
-                    image = scale(image, width, height);
-                    imageBoxSecondScreen.setIcon(new ImageIcon(image));
 
-                } catch (IOException ex) {
-                    Logger.getLogger(PreProcessScreen.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            } else {
-                try {
-                    BufferedImage image;
-                    int width, height;
-                    image = ImageIO.read(new File(imagePath));
-                    width = image.getWidth() - 4;
-                    height = image.getHeight() - 4;
-                    imagePathTextField.setText(width + " " + height);
-                    image = scale(image, width, height);
-                    imageBoxSecondScreen.setIcon(new ImageIcon(image));
-
-                } catch (IOException ex) {
-                    Logger.getLogger(PreProcessScreen.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-*/
-        // TODO add your handling code here:
     }//GEN-LAST:event_imageBoxSecondScreenMouseWheelMoved
+
+    private void acceptPreProcessActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_acceptPreProcessActionPerformed
+        preProcessComboBox.setEnabled(true);
+        reduceMagnificationSlider.setEnabled(true);
+
+
+    }//GEN-LAST:event_acceptPreProcessActionPerformed
+
+    private void backButtonOnSecondScreenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonOnSecondScreenActionPerformed
+        SelectImageScreen selectImageScreen = new SelectImageScreen();
+        selectImageScreen.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_backButtonOnSecondScreenActionPerformed
     public BufferedImage makeGray(BufferedImage img) {
         for (int x = 0; x < img.getWidth(); ++x) {
             for (int y = 0; y < img.getHeight(); ++y) {
                 int rgb = img.getRGB(x, y);
-                int r = (rgb >> 16) & 0xFF;
+                int r = (rgb >> 16) & 0xFF; //Hex renk kodunu dönüştürür
                 int g = (rgb >> 8) & 0xFF;
                 int b = (rgb & 0xFF);
 
-                // Normalize and gamma correct:
                 float rr = (float) Math.pow(r / 255.0, 2.2);
                 float gg = (float) Math.pow(g / 255.0, 2.2);
                 float bb = (float) Math.pow(b / 255.0, 2.2);
 
-                // Calculate luminance:
                 float lum = (float) (0.2126 * rr + 0.7152 * gg + 0.0722 * bb);
 
-                // Gamma compand and rescale to byte range:
                 int grayLevel = (int) (255.0 * Math.pow(lum, 1.0 / 2.2));
                 int gray = (grayLevel << 16) + (grayLevel << 8) + grayLevel;
                 img.setRGB(x, y, gray);
-
             }
         }
         return img;
     }
 
-    public BufferedImage scale(BufferedImage img, int targetWidth, int targetHeight) {
+    public BufferedImage scale(BufferedImage img, int width, int height) {
 
         int type = (img.getTransparency() == Transparency.OPAQUE) ? BufferedImage.TYPE_INT_RGB : BufferedImage.TYPE_INT_ARGB;
         BufferedImage ret = img;
@@ -421,14 +402,14 @@ public class PreProcessScreen extends javax.swing.JFrame {
         int prevH = h;
 
         do {
-            if (w > targetWidth) {
+            if (w > width) {
                 w /= 2;
-                w = (w < targetWidth) ? targetWidth : w;
+                w = (w < width) ? width : w;
             }
 
-            if (h > targetHeight) {
+            if (h > height) {
                 h /= 2;
-                h = (h < targetHeight) ? targetHeight : h;
+                h = (h < height) ? height : h;
             }
 
             if (scratchImage == null) {
@@ -443,14 +424,14 @@ public class PreProcessScreen extends javax.swing.JFrame {
             prevW = w;
             prevH = h;
             ret = scratchImage;
-        } while (w != targetWidth || h != targetHeight);
+        } while (w != width || h != height);
 
         if (g2 != null) {
             g2.dispose();
         }
 
-        if (targetWidth != ret.getWidth() || targetHeight != ret.getHeight()) {
-            scratchImage = new BufferedImage(targetWidth, targetHeight, type);
+        if (width != ret.getWidth() || height != ret.getHeight()) {
+            scratchImage = new BufferedImage(width, height, type);
             g2 = scratchImage.createGraphics();
             g2.drawImage(ret, 0, 0, null);
             g2.dispose();
@@ -467,6 +448,7 @@ public class PreProcessScreen extends javax.swing.JFrame {
     }
 
     public void getHistogram(BufferedImage image) {
+        image = makeGray(image);
         try {
             int iW = image.getWidth();
             int iH = image.getHeight();
@@ -483,8 +465,8 @@ public class PreProcessScreen extends javax.swing.JFrame {
                 for (int j = 0; j < 255; j++) {
                     for (int k = 0; k < 255; k++) {
                         if (a[i][j][k] > 0) {
-                            System.out.println("colour[" + i + "][" + j + "][" + k + "] repeated " + a[i][j][k] + "times \n");
-                            //i->Red j-Green k->Blue                        
+                            System.out.println("Renk[" + i + "][" + j + "][" + k + "] "
+                                    + a[i][j][k] + " tane \n");
 
                         }
                     }
@@ -545,8 +527,6 @@ public class PreProcessScreen extends javax.swing.JFrame {
     private javax.swing.JTextField heightTextField;
     private javax.swing.JLabel imageBoxSecondScreen;
     private javax.swing.JLabel imagePathTextField;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JButton nextButtonOnSecondScreen;
     private javax.swing.JComboBox<String> preProcessComboBox;
     private javax.swing.JSlider reduceMagnificationSlider;
