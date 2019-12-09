@@ -24,25 +24,23 @@ public class MorphologicalOperation extends javax.swing.JFrame {
     String imagePath;
     String currentImagePath = "src//opencv//images//output//fourth.png";
     String tempImageProcessPath = "D://harf.png";
+
     /**
      * Creates new form MorphologicalOperation
      */
     public MorphologicalOperation(String imagePath) {
-        
+
         this.imagePath = imagePath;
         initComponents();
 
         try {
             //init image proces
-          /*  File fileExample = new File(tempImageProcessPath);
+            /*  File fileExample = new File(tempImageProcessPath);
             BufferedImage imageTemp  = ImageIO.read(fileExample);
             //init image process
             imageBoxFourthScreen.setIcon(new ImageIcon(imageTemp));
-            */
-            
-            
-            
-            
+             */
+
             File f = new File(imagePath);
             BufferedImage image;
             image = ImageIO.read(f);
@@ -55,10 +53,12 @@ public class MorphologicalOperation extends javax.swing.JFrame {
         System.out.println(this.imagePath);
         this.setLocationRelativeTo(null);
     }
+
     public void writeImage(BufferedImage image) throws IOException {
         File outputfile = new File(currentImagePath);
         ImageIO.write(image, "png", outputfile);
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -77,12 +77,28 @@ public class MorphologicalOperation extends javax.swing.JFrame {
         MorphologicalOperationsCombobox = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         buttonGroup1.add(acceptMorphologicalOperation);
         acceptMorphologicalOperation.setText("Morf. İşl. uygulamak istiyorum");
+        acceptMorphologicalOperation.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                acceptMorphologicalOperationActionPerformed(evt);
+            }
+        });
 
         buttonGroup1.add(declineMorphologicalOperation);
+        declineMorphologicalOperation.setSelected(true);
         declineMorphologicalOperation.setText("Morf. İşl. uygulamak istemiyorum");
+        declineMorphologicalOperation.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                declineMorphologicalOperationActionPerformed(evt);
+            }
+        });
 
         nextButtonOnFourthScreen.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
         nextButtonOnFourthScreen.setLabel("İleri >");
@@ -94,6 +110,11 @@ public class MorphologicalOperation extends javax.swing.JFrame {
 
         backButtonOnFourthScreen.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
         backButtonOnFourthScreen.setLabel("< Geri");
+        backButtonOnFourthScreen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backButtonOnFourthScreenActionPerformed(evt);
+            }
+        });
 
         MorphologicalOperationsCombobox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Morfolojik İşlemler", "Siyah beyaz resimde genişletme", "Siyah beyaz resimde erozyon", "Siyah beyaz resimde açma", "Siyah beyaz resimde kapama" }));
         MorphologicalOperationsCombobox.addActionListener(new java.awt.event.ActionListener() {
@@ -112,7 +133,7 @@ public class MorphologicalOperation extends javax.swing.JFrame {
                     .addComponent(acceptMorphologicalOperation)
                     .addComponent(declineMorphologicalOperation)
                     .addComponent(MorphologicalOperationsCombobox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 70, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
                 .addComponent(imageBoxFourthScreen, javax.swing.GroupLayout.PREFERRED_SIZE, 748, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
@@ -132,23 +153,23 @@ public class MorphologicalOperation extends javax.swing.JFrame {
                         .addComponent(declineMorphologicalOperation)
                         .addGap(56, 56, 56)
                         .addComponent(MorphologicalOperationsCombobox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(imageBoxFourthScreen, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(imageBoxFourthScreen, javax.swing.GroupLayout.PREFERRED_SIZE, 429, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(54, 54, 54)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(backButtonOnFourthScreen, javax.swing.GroupLayout.DEFAULT_SIZE, 54, Short.MAX_VALUE)
                     .addComponent(nextButtonOnFourthScreen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void MorphologicalOperationsComboboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MorphologicalOperationsComboboxActionPerformed
         System.out.println("Tetiklendi" + MorphologicalOperationsCombobox.getSelectedIndex() + "");
 
         if (MorphologicalOperationsCombobox.getSelectedIndex() == 1) {
-            
-            
+
             imageFX.MyImage myImage = new imageFX.MyImage(800, 600);
             myImage.readImage(imagePath);
             myImage = Dilation.grayscaleImage(myImage);
@@ -158,12 +179,10 @@ public class MorphologicalOperation extends javax.swing.JFrame {
             } catch (IOException ex) {
                 Logger.getLogger(MorphologicalOperation.class.getName()).log(Level.SEVERE, null, ex);
             }
-        
 
         }        // TODO add your handling code here:
         if (MorphologicalOperationsCombobox.getSelectedIndex() == 2) {
-            
-            
+
             imageFX.MyImage myImage = new imageFX.MyImage(800, 600);
             myImage.readImage(imagePath);
             myImage = Erosion.grayscaleImage(myImage);
@@ -176,8 +195,7 @@ public class MorphologicalOperation extends javax.swing.JFrame {
 
         }        // TODO add your handling code here:
         if (MorphologicalOperationsCombobox.getSelectedIndex() == 3) {
-            
-            
+
             imageFX.MyImage myImage = new imageFX.MyImage(800, 600);
             myImage.readImage(imagePath);
             myImage = Dilation.binaryImage(Erosion.binaryImage(myImage, true), true);
@@ -190,8 +208,7 @@ public class MorphologicalOperation extends javax.swing.JFrame {
 
         }        // TODO add your handling code here:
         if (MorphologicalOperationsCombobox.getSelectedIndex() == 4) {
-            
-            
+
             imageFX.MyImage myImage = new imageFX.MyImage(800, 600);
             myImage.readImage(imagePath);
             myImage = Erosion.binaryImage(Dilation.binaryImage(myImage, true), false);
@@ -210,6 +227,35 @@ public class MorphologicalOperation extends javax.swing.JFrame {
         segmentationScreen.setVisible(true);
         this.setVisible(false);              // TODO add your handling code here:
     }//GEN-LAST:event_nextButtonOnFourthScreenActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        MorphologicalOperationsCombobox.setEnabled(false);
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formWindowOpened
+
+    private void declineMorphologicalOperationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_declineMorphologicalOperationActionPerformed
+        MorphologicalOperationsCombobox.setEnabled(false);        // TODO add your handling code here:
+    }//GEN-LAST:event_declineMorphologicalOperationActionPerformed
+
+    private void acceptMorphologicalOperationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_acceptMorphologicalOperationActionPerformed
+        MorphologicalOperationsCombobox.setEnabled(true);        // TODO add your handling code here:
+    }//GEN-LAST:event_acceptMorphologicalOperationActionPerformed
+
+    private void backButtonOnFourthScreenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonOnFourthScreenActionPerformed
+        if (declineMorphologicalOperation.isSelected()) {
+            FilterScreen filterScreen;
+            filterScreen = new FilterScreen("src//opencv//images//output//third.png");
+            filterScreen.setVisible(true);
+            this.setVisible(false);
+        } else {
+            FilterScreen filterScreen;
+            filterScreen = new FilterScreen("src//opencv//images//output//fourth.png");
+            filterScreen.setVisible(true);
+            this.setVisible(false);
+
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_backButtonOnFourthScreenActionPerformed
 
     /**
      * @param args the command line arguments
