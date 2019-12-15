@@ -466,20 +466,65 @@ public class FilterScreen extends javax.swing.JFrame {
 
         bi = averageGrayscale(bi);
 
-        int[][] intensities = ImageUtil.convertToMatrix(bi, ImageUtil.IntensityModel.RED);
+        int[][] intensities = convertToMatrix(bi, IntensityModel.RED);
 
         int[][] modifiedIntensties = applyMask(intensities, mask);
 
         BufferedImage modified = new BufferedImage(bi.getWidth(), bi.getHeight(), bi.getType());
         for (int i = 0; i < modified.getHeight(); i++) {
             for (int j = 0; j < modified.getWidth(); j++) {
-                modified.setRGB(j, i, ImageUtil.colorToRGB(new Color(bi.getRGB(j, i)).getAlpha(),
+                modified.setRGB(j, i, colorToRGB(new Color(bi.getRGB(j, i)).getAlpha(),
                         modifiedIntensties[i][j],
                         modifiedIntensties[i][j],
                         modifiedIntensties[i][j]));
             }
         }
         return modified;
+    }
+
+    public enum IntensityModel {
+        AVERAGE, RED, GREEN, BLUE;
+
+        byte combine(int r, int g, int b) {
+            switch (this) {
+                case AVERAGE:
+                    return (byte) ((r + b + g) / 3);
+                case RED:
+                    return (byte) r;
+                case GREEN:
+                    return (byte) g;
+                case BLUE:
+                    return (byte) b;
+                default:
+                    throw new IllegalStateException();
+            }
+        }
+
+        byte combine(byte r, byte g, byte b) {
+            return combine(r & 0xff, g & 0xff, b & 0xff);
+        }
+    }
+
+    public static int[][] convertToMatrix(BufferedImage image, IntensityModel model) {
+        int height = image.getHeight();
+        int width = image.getWidth();
+        int[][] result = new int[height][width];
+
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                Color c = new Color(image.getRGB(j, i));
+                if (model == IntensityModel.RED) {
+                    result[i][j] = c.getRed();
+                } else if (model == IntensityModel.GREEN) {
+                    result[i][j] = c.getGreen();
+                } else if (model == IntensityModel.BLUE) {
+                    result[i][j] = c.getBlue();
+                } else {
+                    result[i][j] = (c.getRed() + c.getGreen() + c.getBlue()) / 3;
+                }
+            }
+        }
+        return result;
     }
 
     public static BufferedImage averageGrayscale(BufferedImage original) {
@@ -509,7 +554,6 @@ public class FilterScreen extends javax.swing.JFrame {
 
             }
         }
-        System.out.println("Image grayscale successful");
         return avg_gray;
     }
 
