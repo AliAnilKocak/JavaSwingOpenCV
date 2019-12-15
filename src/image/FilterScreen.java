@@ -5,6 +5,7 @@
  */
 package image;
 
+import static image.PointOperation.colorToRGB;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Frame;
@@ -427,13 +428,13 @@ public class FilterScreen extends javax.swing.JFrame {
     }
 
     MyImage medianFilter(MyImage img, int maskSize) {
-       
+
         int outputPixels[] = new int[img.getImageTotalPixels()];
 
         int width = img.getImageWidth();
         int height = img.getImageHeight();
         int buff[];
-     
+
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 buff = new int[maskSize * maskSize];
@@ -453,7 +454,7 @@ public class FilterScreen extends javax.swing.JFrame {
                 outputPixels[x + y * width] = buff[count / 2];
             }
         }
-    
+
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 img.setPixelToValue(x, y, outputPixels[x + y * width]);//çıktı resmi 
@@ -464,7 +465,7 @@ public class FilterScreen extends javax.swing.JFrame {
 
     BufferedImage applyEdgeDetection(BufferedImage bi, int[][] mask) {
 
-        bi = PointOperation.averageGrayscale(bi);
+        bi = averageGrayscale(bi);
 
         int[][] intensities = ImageUtil.convertToMatrix(bi, ImageUtil.IntensityModel.RED);
 
@@ -480,6 +481,37 @@ public class FilterScreen extends javax.swing.JFrame {
             }
         }
         return modified;
+    }
+
+    public static BufferedImage averageGrayscale(BufferedImage original) {
+
+        int alpha, red, green, blue;
+        int newPixel;
+
+        BufferedImage avg_gray = new BufferedImage(original.getWidth(), original.getHeight(), original.getType());
+        int[] avgLUT = new int[766];
+        for (int i = 0; i < avgLUT.length; i++) {
+            avgLUT[i] = (int) (i / 3);
+        }
+
+        for (int i = 0; i < original.getWidth(); i++) {
+            for (int j = 0; j < original.getHeight(); j++) {
+
+                alpha = new Color(original.getRGB(i, j)).getAlpha();
+                red = new Color(original.getRGB(i, j)).getRed();
+                green = new Color(original.getRGB(i, j)).getGreen();
+                blue = new Color(original.getRGB(i, j)).getBlue();
+
+                newPixel = red + green + blue;
+                newPixel = avgLUT[newPixel];
+                newPixel = colorToRGB(alpha, newPixel, newPixel, newPixel);
+
+                avg_gray.setRGB(i, j, newPixel);
+
+            }
+        }
+        System.out.println("Image grayscale successful");
+        return avg_gray;
     }
 
     private static int[][] applyMask(int[][] image, int[][] mask) {

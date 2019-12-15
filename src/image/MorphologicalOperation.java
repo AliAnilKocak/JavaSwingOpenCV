@@ -163,7 +163,7 @@ public class MorphologicalOperation extends javax.swing.JFrame {
         if (MorphologicalOperationsCombobox.getSelectedIndex() == 1) {
             image.MyImage myImage = new image.MyImage(800, 600);
             myImage.readImage(imagePath);
-            myImage = Dilation.binaryImage(myImage, true);
+            myImage = binaryImage(myImage, true);
             imageBoxFourthScreen.setIcon(new ImageIcon(myImage.getImage()));
             try {
                 writeImage(myImage.getImage());
@@ -176,7 +176,7 @@ public class MorphologicalOperation extends javax.swing.JFrame {
 
             image.MyImage myImage = new image.MyImage(800, 600);
             myImage.readImage(imagePath);
-            myImage = Erosion.binaryImage(myImage, false);
+            myImage = binaryImageErosion(myImage, false);
             imageBoxFourthScreen.setIcon(new ImageIcon(myImage.getImage()));
             try {
                 writeImage(myImage.getImage());
@@ -189,7 +189,7 @@ public class MorphologicalOperation extends javax.swing.JFrame {
 
             image.MyImage myImage = new image.MyImage(800, 600);
             myImage.readImage(imagePath);
-            myImage = Dilation.binaryImage(Erosion.binaryImage(myImage, true), true);
+            myImage = binaryImage(binaryImageErosion(myImage, true), true);
             imageBoxFourthScreen.setIcon(new ImageIcon(myImage.getImage()));
             try {
                 writeImage(myImage.getImage());
@@ -202,7 +202,7 @@ public class MorphologicalOperation extends javax.swing.JFrame {
 
             image.MyImage myImage = new image.MyImage(800, 600);
             myImage.readImage(imagePath);
-            myImage = Erosion.binaryImage(Dilation.binaryImage(myImage, true), false);
+            myImage = binaryImageErosion(binaryImage(myImage, true), false);
             imageBoxFourthScreen.setIcon(new ImageIcon(myImage.getImage()));
             try {
                 writeImage(myImage.getImage());
@@ -213,6 +213,84 @@ public class MorphologicalOperation extends javax.swing.JFrame {
         }        // TODO add your handling code here:
     }//GEN-LAST:event_MorphologicalOperationsComboboxActionPerformed
 
+    public static MyImage binaryImage(MyImage img, boolean dilateBackgroundPixel) {
+        int width = img.getImageWidth();
+        int height = img.getImageHeight();
+        int output[] = new int[width * height];
+        int targetValue = (dilateBackgroundPixel == true) ? 0 : 255;
+        int reverseValue = (targetValue == 255) ? 0 : 255;
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                if (img.getRed(x, y) == targetValue) {
+
+                    boolean flag = false;
+                    for (int ty = y - 1; ty <= y + 1 && flag == false; ty++) {
+                        for (int tx = x - 1; tx <= x + 1 && flag == false; tx++) {
+                            if (ty >= 0 && ty < height && tx >= 0 && tx < width) {
+                                if (img.getRed(tx, ty) != targetValue) {
+                                    flag = true;
+                                    output[x + y * width] = reverseValue;
+                                }
+                            }
+                        }
+                    }
+                    if (flag == false) {
+                        output[x + y * width] = targetValue;
+                    }
+                } else {
+                    output[x + y * width] = reverseValue;
+                }
+            }
+        }
+
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                int v = output[x + y * width];
+                img.setPixel(x, y, 255, v, v, v);
+            }
+        }
+        return img;
+    }
+    
+    public static MyImage binaryImageErosion(MyImage img, boolean erodeForegroundPixel) {
+        int width = img.getImageWidth();
+        int height = img.getImageHeight();
+        int output[] = new int[width * height];
+        int targetValue = (erodeForegroundPixel == true) ? 0 : 255;
+        int reverseValue = (targetValue == 255) ? 0 : 255;
+
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                if (img.getRed(x, y) == targetValue) {
+                    boolean flag = false;
+                    for (int ty = y - 1; ty <= y + 1 && flag == false; ty++) {
+                        for (int tx = x - 1; tx <= x + 1 && flag == false; tx++) {
+                            if (ty >= 0 && ty < height && tx >= 0 && tx < width) {
+                                if (img.getRed(tx, ty) != targetValue) {
+                                    flag = true;
+                                    output[x + y * width] = reverseValue;
+                                }
+                            }
+                        }
+                    }
+                    if (flag == false) {
+                        output[x + y * width] = targetValue;
+                    }
+                } else {
+                    output[x + y * width] = reverseValue;
+                }
+            }
+        }
+
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                int v = output[x + y * width];
+                img.setPixel(x, y, 255, v, v, v);
+            }
+        }
+        return img;
+    }
+    
     private void nextButtonOnFourthScreenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextButtonOnFourthScreenActionPerformed
         SegmentationScreen segmentationScreen = new SegmentationScreen(currentImagePath);
         segmentationScreen.setVisible(true);
