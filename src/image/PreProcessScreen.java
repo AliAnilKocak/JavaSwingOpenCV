@@ -392,12 +392,13 @@ public class PreProcessScreen extends javax.swing.JFrame {
         int type = BufferedImage.TYPE_INT_RGB;
         BufferedImage ret = img;
         BufferedImage output = null;
+        Graphics2D g2 = null;
 
         int w = img.getWidth();
         int h = img.getHeight();
 
-        int prevW = w;
-        int prevH = h;
+        int genislik = w;
+        int yukseklik = h;
 
         do {
             if (w > width) {
@@ -412,15 +413,27 @@ public class PreProcessScreen extends javax.swing.JFrame {
 
             if (output == null) {
                 output = new BufferedImage(w, h, type);
+                g2 = output.createGraphics();
             }
 
-            prevW = w;
-            prevH = h;
+            g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
+                    RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+            g2.drawImage(ret, 0, 0, w, h, 0, 0, genislik, yukseklik, null);
+
+            genislik = w;
+            yukseklik = h;
             ret = output;
         } while (w != width || h != height);
 
+        if (g2 != null) {
+            g2.dispose();
+        }
+
         if (width != ret.getWidth() || height != ret.getHeight()) {
             output = new BufferedImage(width, height, type);
+            g2 = output.createGraphics();
+            g2.drawImage(ret, 0, 0, null);
+            g2.dispose();
             ret = output;
         }
 

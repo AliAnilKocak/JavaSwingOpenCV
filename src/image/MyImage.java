@@ -22,7 +22,7 @@ public class MyImage {
 
     public MyImage() {
     }
-    
+
     public static int getPixelValueFromARGBValue(int a, int r, int g, int b) {
         return (a << 24) | (r << 16) | (g << 8) | b;
     }
@@ -104,48 +104,12 @@ public class MyImage {
         return totalPixels;
     }
 
-    public int getAlpha(int x, int y) {
-        return (pixels[x + (y * width)] >> 24) & 0xFF;
-    }
-
     public int getRed(int x, int y) {
         return (pixels[x + (y * width)] >> 16) & 0xFF;
     }
 
-    public int getGreen(int x, int y) {
-        return (pixels[x + (y * width)] >> 8) & 0xFF;
-    }
-
-    public int getBlue(int x, int y) {
-        return pixels[x + (y * width)] & 0xFF;
-    }
-
     public int getPixel(int x, int y) {
         return pixels[x + (y * width)];
-    }
-
-    public int[] getPixelArray() {
-        return pixels;
-    }
-
-    public void setAlpha(int x, int y, int alpha) {
-        pixels[x + (y * width)] = (alpha << 24) | (pixels[x + (y * width)] & 0x00FFFFFF);
-        updateImagePixelAt(x, y);
-    }
-
-    public void setRed(int x, int y, int red) {
-        pixels[x + (y * width)] = (red << 16) | (pixels[x + (y * width)] & 0xFF00FFFF);
-        updateImagePixelAt(x, y);
-    }
-
-    public void setGreen(int x, int y, int green) {
-        pixels[x + (y * width)] = (green << 8) | (pixels[x + (y * width)] & 0xFFFF00FF);
-        updateImagePixelAt(x, y);
-    }
-
-    public void setBlue(int x, int y, int blue) {
-        pixels[x + (y * width)] = blue | (pixels[x + (y * width)] & 0xFFFFFF00);
-        updateImagePixelAt(x, y);
     }
 
     public void setPixel(int x, int y, int alpha, int red, int green, int blue) {
@@ -156,15 +120,6 @@ public class MyImage {
     public void setPixelToValue(int x, int y, int pixelValue) {
         pixels[x + (y * width)] = pixelValue;
         updateImagePixelAt(x, y);
-    }
-
-    public void setPixelArray(int pixelArray[]) {
-        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++) {
-                pixels[x + y * width] = pixelArray[x + y * width];
-                updateImagePixelAt(x, y);
-            }
-        }
     }
 
     private void updateImagePixelAt(int x, int y) {

@@ -5,6 +5,7 @@
  */
 package image;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Frame;
 import java.awt.Graphics;
@@ -33,6 +34,15 @@ import javax.swing.ImageIcon;
  * @author alian
  */
 public class FilterScreen extends javax.swing.JFrame {
+
+    public static int[][] maskSobelX = {
+        {-1, 0, 1},
+        {-2, 0, 2},
+        {-1, 0, 1}};
+    public static int[][] maskLaplacian = {
+        {0, 1, 0},
+        {1, -4, 1},
+        {0, 1, 0}};
 
     static BufferedImage image;
     static boolean imageLoaded = false;
@@ -181,7 +191,6 @@ public class FilterScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowOpened
 
     private void FilterComboboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FilterComboboxActionPerformed
-        System.out.println("Tetiklendi" + FilterCombobox.getSelectedIndex() + "");
 
         if (FilterCombobox.getSelectedIndex() == 1) {
             imageBoxThirdScreen.setIcon(new ImageIcon(blurImage(this.imagePath)));
@@ -204,7 +213,7 @@ public class FilterScreen extends javax.swing.JFrame {
         if (FilterCombobox.getSelectedIndex() == 3) {
             MyImage myImage = new MyImage(800, 600);
             myImage.readImage(imagePath);
-            myImage = Median.medianFilter(myImage, 3);
+            myImage = medianFilter(myImage, 3);
             imageBoxThirdScreen.setIcon(new ImageIcon(myImage.getImage()));
             try {
                 writeImage(myImage.getImage());
@@ -215,8 +224,8 @@ public class FilterScreen extends javax.swing.JFrame {
         if (FilterCombobox.getSelectedIndex() == 4) {
             try {
                 BufferedImage image = ImageIO.read(new File(imagePath));
-                imageBoxThirdScreen.setIcon(new ImageIcon(EdgeDetection.applyEdgeDetection(image, EdgeDetection.maskLaplacian)));
-                writeImage(EdgeDetection.applyEdgeDetection(image, EdgeDetection.maskLaplacian));
+                imageBoxThirdScreen.setIcon(new ImageIcon(applyEdgeDetection(image, maskLaplacian)));
+                writeImage(applyEdgeDetection(image, maskLaplacian));
             } catch (IOException ex) {
                 Logger.getLogger(FilterScreen.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -224,8 +233,8 @@ public class FilterScreen extends javax.swing.JFrame {
         if (FilterCombobox.getSelectedIndex() == 5) {
             try {
                 BufferedImage image = ImageIO.read(new File(imagePath));
-                imageBoxThirdScreen.setIcon(new ImageIcon(EdgeDetection.applyEdgeDetection(image, EdgeDetection.maskSobelX)));
-                writeImage(EdgeDetection.applyEdgeDetection(image, EdgeDetection.maskSobelX));
+                imageBoxThirdScreen.setIcon(new ImageIcon(applyEdgeDetection(image, maskSobelX)));
+                writeImage(applyEdgeDetection(image, maskSobelX));
             } catch (IOException ex) {
                 Logger.getLogger(FilterScreen.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -238,7 +247,7 @@ public class FilterScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_declineFilterActionPerformed
 
     private void nextButtonOnThirdScreenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextButtonOnThirdScreenActionPerformed
-       /* try {
+        /* try {
             writeImage(tempImage);
         } catch (IOException ex) {
             Logger.getLogger(PreProcessScreen.class.getName()).log(Level.SEVERE, null, ex);
@@ -254,28 +263,28 @@ public class FilterScreen extends javax.swing.JFrame {
 
     private void backButtonOnThirdScreenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonOnThirdScreenActionPerformed
 
-           if(declineFilter.isSelected()){
-            
-               try {
-                   PreProcessScreen preProcessScreen;
-                   preProcessScreen = new PreProcessScreen("src//image//images//output//second.png");
-                   preProcessScreen.setVisible(true);
-                   this.setVisible(false);
-               } catch (IOException ex) {
-                   Logger.getLogger(FilterScreen.class.getName()).log(Level.SEVERE, null, ex);
-               }
-             
-           }else{
-               try {
-                   PreProcessScreen preProcessScreen;
-                   preProcessScreen = new PreProcessScreen("src//image//images//output//third.png");
-                   preProcessScreen.setVisible(true);
-                   this.setVisible(false);
-               } catch (IOException ex) {
-                   Logger.getLogger(FilterScreen.class.getName()).log(Level.SEVERE, null, ex);
-               }
+        if (declineFilter.isSelected()) {
 
-           }
+            try {
+                PreProcessScreen preProcessScreen;
+                preProcessScreen = new PreProcessScreen("src//image//images//output//second.png");
+                preProcessScreen.setVisible(true);
+                this.setVisible(false);
+            } catch (IOException ex) {
+                Logger.getLogger(FilterScreen.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        } else {
+            try {
+                PreProcessScreen preProcessScreen;
+                preProcessScreen = new PreProcessScreen("src//image//images//output//third.png");
+                preProcessScreen.setVisible(true);
+                this.setVisible(false);
+            } catch (IOException ex) {
+                Logger.getLogger(FilterScreen.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
 
         // TODO add your handling code here:
     }//GEN-LAST:event_backButtonOnThirdScreenActionPerformed
@@ -327,73 +336,37 @@ public class FilterScreen extends javax.swing.JFrame {
 
     public BufferedImage blurImage(String imagePath) {
         ImageObserver myImageObserver = new ImageObserver() {
-
             public boolean imageUpdate(Image image, int flags, int x, int y, int width, int height) {
-
                 if ((flags & ALLBITS) != 0) {
-
                     imageLoaded = true;
-
-                    System.out.println("Image loading finished!");
-
+                    System.out.println("Resim yüklendi");
                     return false;
-
                 }
-
                 return true;
-
             }
-
         };
 
-        // The image URL - change to where your image file is located!
-        String imageURL = imagePath;
-
-        /**
-         *
-         * This call returns immediately and pixels are loaded in the background
-         *
-         * We use an ImageObserver to be notified when the loading of the image
-         *
-         * is complete
-         *
-         */
-        Image sourceImage = Toolkit.getDefaultToolkit().getImage(imageURL);
-
+        Image sourceImage = Toolkit.getDefaultToolkit().getImage(imagePath);
         sourceImage.getWidth(myImageObserver);
 
-        // We wait until the image is fully loaded
         while (!imageLoaded) {
-
             try {
-
                 Thread.sleep(100);
-
             } catch (InterruptedException e) {
-
             }
-
         }
 
-        // Create a buffered image from the source image with a format that's compatible with the screen
         GraphicsEnvironment graphicsEnvironment = GraphicsEnvironment.getLocalGraphicsEnvironment();
-
         GraphicsDevice graphicsDevice = graphicsEnvironment.getDefaultScreenDevice();
-
         GraphicsConfiguration graphicsConfiguration = graphicsDevice.getDefaultConfiguration();
 
-        // If the source image has no alpha info use Transparency.OPAQUE instead
         image = graphicsConfiguration.createCompatibleImage(sourceImage.getWidth(null), sourceImage.getHeight(null), Transparency.BITMASK);
 
-        // Copy image to buffered image
         Graphics graphics = image.createGraphics();
 
-        // Paint the image onto the buffered image
         graphics.drawImage(sourceImage, 0, 0, null);
-
         graphics.dispose();
 
-        // A 3x3 kernel that blurs an image
         Kernel kernel = new Kernel(3, 3,
                 new float[]{
                     1f / 9f, 1f / 9f, 1f / 9f,
@@ -401,80 +374,45 @@ public class FilterScreen extends javax.swing.JFrame {
                     1f / 9f, 1f / 9f, 1f / 9f});
 
         BufferedImageOp op = new ConvolveOp(kernel);
-
         image = op.filter(image, null);
-
-        // Create frame with specific title
         return image;
     }
 
     public BufferedImage sharpenImage(String imagePath) {
         ImageObserver myImageObserver = new ImageObserver() {
-
             @Override
             public boolean imageUpdate(Image image, int flags, int x, int y, int width, int height) {
-
                 if ((flags & ALLBITS) != 0) {
-
                     imageLoaded = true;
-
-                    System.out.println("Image loading finished!");
-
+                    System.out.println("Resim yüklendi");
                     return false;
-
                 }
-
                 return true;
-
             }
         };
 
-        // The image URL - change to where your image file is located!
-        String imageURL = imagePath;
-
-        /**
-         *
-         * This call returns immediately and pixels are loaded in the background
-         *
-         * We use an ImageObserver to be notified when the loading of the image
-         *
-         * is complete
-         *
-         */
-        Image sourceImage = Toolkit.getDefaultToolkit().getImage(imageURL);
-
+        Image sourceImage = Toolkit.getDefaultToolkit().getImage(imagePath);
         sourceImage.getWidth(myImageObserver);
 
-        // We wait until the image is fully loaded
         while (!imageLoaded) {
-
             try {
                 Thread.sleep(100);
 
             } catch (InterruptedException e) {
             }
-
         }
 
-        // Create a buffered image from the source image with a format that's compatible with the screen
         GraphicsEnvironment graphicsEnvironment = GraphicsEnvironment.getLocalGraphicsEnvironment();
-
         GraphicsDevice graphicsDevice = graphicsEnvironment.getDefaultScreenDevice();
-
         GraphicsConfiguration graphicsConfiguration = graphicsDevice.getDefaultConfiguration();
-
-        // If the source image has no alpha info use Transparency.OPAQUE instead
         image = graphicsConfiguration.createCompatibleImage(sourceImage.getWidth(null), sourceImage.getHeight(null), Transparency.BITMASK);
 
-        // Copy image to buffered image
         Graphics graphics = image.createGraphics();
 
-        // Paint the image onto the buffered image
         graphics.drawImage(sourceImage, 0, 0, null);
 
         graphics.dispose();
 
-        // A 3x3 kernel that sharpens an image
         Kernel kernel = new Kernel(3, 3,
                 new float[]{
                     -1, -1, -1,
@@ -486,5 +424,87 @@ public class FilterScreen extends javax.swing.JFrame {
         image = op.filter(image, null);
 
         return image;
+    }
+
+    MyImage medianFilter(MyImage img, int maskSize) {
+       
+        int outputPixels[] = new int[img.getImageTotalPixels()];
+
+        int width = img.getImageWidth();
+        int height = img.getImageHeight();
+        int buff[];
+     
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                buff = new int[maskSize * maskSize];
+                int count = 0;
+                for (int r = y - (maskSize / 2); r <= y + (maskSize / 2); r++) {
+                    for (int c = x - (maskSize / 2); c <= x + (maskSize / 2); c++) {
+                        if (r < 0 || r >= height || c < 0 || c >= width) {//maskenin dışında kalan alan
+                            continue;
+                        } else {
+                            buff[count] = img.getPixel(c, r);
+                            count++;
+                        }
+                    }
+                }
+
+                java.util.Arrays.sort(buff);
+                outputPixels[x + y * width] = buff[count / 2];
+            }
+        }
+    
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                img.setPixelToValue(x, y, outputPixels[x + y * width]);//çıktı resmi 
+            }
+        }
+        return img;
+    }
+
+    BufferedImage applyEdgeDetection(BufferedImage bi, int[][] mask) {
+
+        bi = PointOperation.averageGrayscale(bi);
+
+        int[][] intensities = ImageUtil.convertToMatrix(bi, ImageUtil.IntensityModel.RED);
+
+        int[][] modifiedIntensties = applyMask(intensities, mask);
+
+        BufferedImage modified = new BufferedImage(bi.getWidth(), bi.getHeight(), bi.getType());
+        for (int i = 0; i < modified.getHeight(); i++) {
+            for (int j = 0; j < modified.getWidth(); j++) {
+                modified.setRGB(j, i, ImageUtil.colorToRGB(new Color(bi.getRGB(j, i)).getAlpha(),
+                        modifiedIntensties[i][j],
+                        modifiedIntensties[i][j],
+                        modifiedIntensties[i][j]));
+            }
+        }
+        return modified;
+    }
+
+    private static int[][] applyMask(int[][] image, int[][] mask) {
+        int height = image.length;
+        int width = image[0].length;
+        int mid = (int) Math.floor(mask.length / 2);
+        int[][] result = new int[height][width];
+
+        int total = 0;
+        for (int i = 0; i < mask.length; i++) {
+            for (int j = 0; j < mask[0].length; j++) {
+                total += mask[i][j];
+            }
+        }
+        for (int i = mid; i < height - mid; i++) {
+            for (int j = mid; j < width - mid; j++) {
+                int value = 0;
+                for (int mi = -mid; mi <= mid; mi++) {
+                    for (int mj = -mid; mj <= mid; mj++) {
+                        value = value + (image[i + mi][j + mj] * mask[mid + mi][mid + mj]);
+                    }
+                }
+                result[i][j] = Math.abs(value);
+            }
+        }
+        return result;
     }
 }
