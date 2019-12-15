@@ -18,14 +18,16 @@ import javax.swing.ImageIcon;
  * @author alian
  */
 public class SegmentationScreen extends javax.swing.JFrame {
-    static BufferedImage image;
+
+     BufferedImage image;
     static boolean imageLoaded = false;
     String imagePath;
-    String currentImagePath = "src//image//images//output//fourth.png";
-    String tempImageProcessPath = "D://harf.png";
-
+    String currentImagePath = "src//image//images//output//fifth.png";
+    String currentImagePathPNG = "src//image//images//output.png";
+    String currentImagePathJPG = "src//image//images//output.jpg";
+    String currentImagePathGIF = "src//image//images//output.gif";
     /**
-    /**
+     * /**
      * Creates new form SegmentationScreen
      */
     public SegmentationScreen(String imagePath) {
@@ -33,17 +35,11 @@ public class SegmentationScreen extends javax.swing.JFrame {
         initComponents();
 
         try {
-            //init image proces
-            File fileExample = new File(tempImageProcessPath);
-            BufferedImage imageTemp = ImageIO.read(fileExample);
-            //init image process
-            imageBoxFifthScreen.setIcon(new ImageIcon(imageTemp));
-
-            /* File f = new File(imagePath);
-            BufferedImage image;
+            File f = new File(imagePath);
+          
             image = ImageIO.read(f);
             writeImage(image);
-            imageBoxFourthScreen.setIcon(new ImageIcon(image));*/
+            imageBoxFifthScreen.setIcon(new ImageIcon(image));
         } catch (IOException ex) {
             Logger.getLogger(FilterScreen.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -51,6 +47,7 @@ public class SegmentationScreen extends javax.swing.JFrame {
         System.out.println(this.imagePath);
         this.setLocationRelativeTo(null);
     }
+
     public void writeImage(BufferedImage image) throws IOException {
         File outputfile = new File(currentImagePath);
         ImageIO.write(image, "png", outputfile);
@@ -67,71 +64,79 @@ public class SegmentationScreen extends javax.swing.JFrame {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
         imageBoxFifthScreen = new javax.swing.JLabel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        saveButton = new javax.swing.JButton();
+        formatCombobox = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        buttonGroup1.add(jRadioButton1);
-        jRadioButton1.setText("jRadioButton1");
+        saveButton.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        saveButton.setText("Kaydet");
+        saveButton.setToolTipText("");
+        saveButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveButtonActionPerformed(evt);
+            }
+        });
 
-        buttonGroup1.add(jRadioButton2);
-        jRadioButton2.setText("jRadioButton2");
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Segmentasyon Menüsü", "Gri seviye resimde eşik değeri bulma", "Siyah beyaz resimde 4’lü komşuluk ile nesne bulma ve gösterme", "Gri seviye resimde istenilen bir yöntemle nesne bulma ve gösterme", "Renkli resimde istenilen bir yöntemle nesne bulma ve gösterme" }));
-
-        jButton1.setText("jButton1");
-
-        jButton2.setText("jButton2");
+        formatCombobox.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        formatCombobox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Format seç", "PNG", "JPG", "GIF" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(27, 27, 27)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jRadioButton1)
-                            .addComponent(jRadioButton2))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap(20, Short.MAX_VALUE)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(97, 97, 97)))
+                    .addComponent(formatCombobox, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(saveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 106, Short.MAX_VALUE)
                 .addComponent(imageBoxFifthScreen, javax.swing.GroupLayout.PREFERRED_SIZE, 748, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton2)
-                .addGap(38, 38, 38)
-                .addComponent(jButton1)
-                .addGap(49, 49, 49))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(imageBoxFifthScreen, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addGap(50, 50, 50))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(37, 37, 37)
-                .addComponent(jRadioButton1)
-                .addGap(18, 18, 18)
-                .addComponent(jRadioButton2)
-                .addGap(52, 52, 52)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGap(75, 75, 75)
+                        .addComponent(formatCombobox, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(saveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(imageBoxFifthScreen, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(130, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
+
+        if (formatCombobox.getSelectedIndex() == 1) {
+            try {
+                File outputfile = new File(currentImagePathPNG);
+                ImageIO.write(image, "png", outputfile);
+            } catch (IOException ex) {
+                Logger.getLogger(SegmentationScreen.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else if (formatCombobox.getSelectedIndex() == 2) {
+            try {
+                File outputfile = new File(currentImagePathJPG);
+                ImageIO.write(image, "gif", outputfile);
+            } catch (IOException ex) {
+                Logger.getLogger(SegmentationScreen.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else if (formatCombobox.getSelectedIndex() == 3) {
+            try {
+                File outputfile = new File(currentImagePathGIF);
+                ImageIO.write(image, "gif", outputfile);
+            } catch (IOException ex) {
+                Logger.getLogger(SegmentationScreen.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_saveButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -170,11 +175,8 @@ public class SegmentationScreen extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JComboBox<String> formatCombobox;
     private javax.swing.JLabel imageBoxFifthScreen;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
+    private javax.swing.JButton saveButton;
     // End of variables declaration//GEN-END:variables
 }
