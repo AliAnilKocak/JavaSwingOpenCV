@@ -50,7 +50,7 @@ public class PreProcessScreen extends javax.swing.JFrame {
 
     public void writeImage(BufferedImage image) throws IOException {
         tempImage = image;
-        BufferedImage bi = tempImage;  // retrieve image
+        BufferedImage bi = tempImage;
         File outputfile = new File(currentImagePath);
         ImageIO.write(bi, "png", outputfile);
     }
@@ -230,7 +230,6 @@ public class PreProcessScreen extends javax.swing.JFrame {
             widthTextField.setVisible(false);
             heightTextField.setVisible(false);
             imagePathTextField.setVisible(false);
-
         }
 
         imagePathTextField.setText(imagePath);
@@ -269,7 +268,7 @@ public class PreProcessScreen extends javax.swing.JFrame {
         if (preProcessComboBox.getSelectedIndex() == 2) {//Resmi büyültme küçültme
             try {
                 BufferedImage image = ImageIO.read(new File(imagePath));
-                image = scale(image, 300, 200);
+                image = boyutlandir(image, 300, 200);
                 imageBoxSecondScreen.setIcon(new ImageIcon(image));
                 writeImage(image);
 
@@ -281,7 +280,7 @@ public class PreProcessScreen extends javax.swing.JFrame {
         if (preProcessComboBox.getSelectedIndex() == 3) {//Resmi Yeniden boyutlandırma
             try {
                 BufferedImage image = ImageIO.read(new File(imagePath));
-                image = scale(image, Integer.parseInt(widthTextField.getText()) / 2, Integer.parseInt(heightTextField.getText()) / 2);
+                image = boyutlandir(image, Integer.parseInt(widthTextField.getText()) / 2, Integer.parseInt(heightTextField.getText()) / 2);
                 imageBoxSecondScreen.setIcon(new ImageIcon(image));
                 writeImage(image);
 
@@ -323,7 +322,7 @@ public class PreProcessScreen extends javax.swing.JFrame {
             width = reduceMagnificationSlider.getValue() * image.getWidth() / 25;
             height = reduceMagnificationSlider.getValue() * image.getHeight() / 25;
 
-            image = scale(image, width, height);
+            image = boyutlandir(image, width, height);
             imageBoxSecondScreen.setIcon(new ImageIcon(image));
 
         } catch (IOException ex) {
@@ -388,12 +387,11 @@ public class PreProcessScreen extends javax.swing.JFrame {
         return img;
     }
 
-    public BufferedImage scale(BufferedImage img, int width, int height) {
+    public BufferedImage boyutlandir(BufferedImage img, int width, int height) {
 
-        int type = (img.getTransparency() == Transparency.OPAQUE) ? BufferedImage.TYPE_INT_RGB : BufferedImage.TYPE_INT_ARGB;
+        int type = BufferedImage.TYPE_INT_RGB;
         BufferedImage ret = img;
-        BufferedImage scratchImage = null;
-        Graphics2D g2 = null;
+        BufferedImage output = null;
 
         int w = img.getWidth();
         int h = img.getHeight();
@@ -412,30 +410,18 @@ public class PreProcessScreen extends javax.swing.JFrame {
                 h = (h < height) ? height : h;
             }
 
-            if (scratchImage == null) {
-                scratchImage = new BufferedImage(w, h, type);
-                g2 = scratchImage.createGraphics();
+            if (output == null) {
+                output = new BufferedImage(w, h, type);
             }
-
-            g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
-                    RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-            g2.drawImage(ret, 0, 0, w, h, 0, 0, prevW, prevH, null);
 
             prevW = w;
             prevH = h;
-            ret = scratchImage;
+            ret = output;
         } while (w != width || h != height);
 
-        if (g2 != null) {
-            g2.dispose();
-        }
-
         if (width != ret.getWidth() || height != ret.getHeight()) {
-            scratchImage = new BufferedImage(width, height, type);
-            g2 = scratchImage.createGraphics();
-            g2.drawImage(ret, 0, 0, null);
-            g2.dispose();
-            ret = scratchImage;
+            output = new BufferedImage(width, height, type);
+            ret = output;
         }
 
         return ret;

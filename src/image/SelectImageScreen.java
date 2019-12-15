@@ -22,7 +22,9 @@ import org.opencv.imgproc.Imgproc;
  * @author alian
  */
 public class SelectImageScreen extends javax.swing.JFrame {
+
     String selectedImagePath;
+
     public SelectImageScreen() {
         initComponents();
         this.setLocationRelativeTo(null); //Ortada açılmasını sağlar
@@ -86,11 +88,11 @@ public class SelectImageScreen extends javax.swing.JFrame {
 
     private void browseImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_browseImageActionPerformed
         JFileChooser browseImageFile = new JFileChooser();
-        FileNameExtensionFilter fnef = new FileNameExtensionFilter("IMAGES", "png", "jpg", "jpeg");
+        FileNameExtensionFilter fnef = new FileNameExtensionFilter("IMAGES", "png", "jpg", "jpeg", "gif");
         int showOpenDialogue = browseImageFile.showOpenDialog(null);
         if (showOpenDialogue == JFileChooser.APPROVE_OPTION) {
             File selectedImageFile = browseImageFile.getSelectedFile();
-             selectedImagePath = selectedImageFile.getAbsolutePath();
+            selectedImagePath = selectedImageFile.getAbsolutePath();
             ImageIcon ii = new ImageIcon(selectedImagePath);
             jLabelImage.setIcon(new ImageIcon(new ImageIcon(selectedImagePath).getImage().getScaledInstance(jLabelImage.getWidth(), jLabelImage.getHeight(), Image.SCALE_DEFAULT)));
 
@@ -111,53 +113,6 @@ public class SelectImageScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_NextOnOnePageActionPerformed
 
     public static void main(String args[]) throws IOException {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(SelectImageScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(SelectImageScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(SelectImageScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(SelectImageScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-       // String path = "C:\\Users\\alian\\Desktop\\anil.jpg";
-      /*  System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-        Mat color = Imgcodecs.
-                imread(path);
-        Mat gray = new Mat();
-        Mat draw = new Mat();
-        Mat wide = new Mat();
-
-        Imgproc.cvtColor(color, gray, Imgproc.COLOR_BGR2GRAY);
-        Imgproc.Canny(gray, wide, 50, 150, 3, false);
-        wide.convertTo(draw, CvType.CV_8U);
-
-        if (Imgcodecs.imwrite("C:\\Users\\alian\\Desktop\\anil22.jpg", draw)) ;
-        {
-            System.out.println("İşlem başarılı.");
-        }
-        */
-        
-        
-  
-        
-
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new SelectImageScreen().setVisible(true);
