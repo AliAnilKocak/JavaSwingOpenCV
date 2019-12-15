@@ -5,7 +5,6 @@
  */
 package image;
 
-import static image.PointOperation.colorToRGB;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Frame;
@@ -538,5 +537,17 @@ public class FilterScreen extends javax.swing.JFrame {
             }
         }
         return result;
+    }
+
+    public static int colorToRGB(int alpha, int red, int green, int blue) {
+        int newPixel = 0;
+        newPixel += alpha;
+        newPixel = newPixel << 8;
+        newPixel += red;
+        newPixel = newPixel << 8;
+        newPixel += green;
+        newPixel = newPixel << 8;
+        newPixel += blue;
+        return newPixel;
     }
 }

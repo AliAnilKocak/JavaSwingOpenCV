@@ -163,7 +163,7 @@ public class MorphologicalOperation extends javax.swing.JFrame {
         if (MorphologicalOperationsCombobox.getSelectedIndex() == 1) {
             image.MyImage myImage = new image.MyImage(800, 600);
             myImage.readImage(imagePath);
-            myImage = binaryImage(myImage, true);
+            myImage = genisletme(myImage, true);
             imageBoxFourthScreen.setIcon(new ImageIcon(myImage.getImage()));
             try {
                 writeImage(myImage.getImage());
@@ -171,12 +171,12 @@ public class MorphologicalOperation extends javax.swing.JFrame {
                 Logger.getLogger(MorphologicalOperation.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-        }        // TODO add your handling code here:
+        }       
         if (MorphologicalOperationsCombobox.getSelectedIndex() == 2) {
 
             image.MyImage myImage = new image.MyImage(800, 600);
             myImage.readImage(imagePath);
-            myImage = binaryImageErosion(myImage, false);
+            myImage = erozyon(myImage, false);
             imageBoxFourthScreen.setIcon(new ImageIcon(myImage.getImage()));
             try {
                 writeImage(myImage.getImage());
@@ -184,12 +184,12 @@ public class MorphologicalOperation extends javax.swing.JFrame {
                 Logger.getLogger(MorphologicalOperation.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-        }        // TODO add your handling code here:
+        }        
         if (MorphologicalOperationsCombobox.getSelectedIndex() == 3) {
 
             image.MyImage myImage = new image.MyImage(800, 600);
             myImage.readImage(imagePath);
-            myImage = binaryImage(binaryImageErosion(myImage, true), true);
+            myImage = genisletme(erozyon(myImage, true), true);
             imageBoxFourthScreen.setIcon(new ImageIcon(myImage.getImage()));
             try {
                 writeImage(myImage.getImage());
@@ -197,12 +197,12 @@ public class MorphologicalOperation extends javax.swing.JFrame {
                 Logger.getLogger(MorphologicalOperation.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-        }        // TODO add your handling code here:
+        }        
         if (MorphologicalOperationsCombobox.getSelectedIndex() == 4) {
 
             image.MyImage myImage = new image.MyImage(800, 600);
             myImage.readImage(imagePath);
-            myImage = binaryImageErosion(binaryImage(myImage, true), false);
+            myImage = erozyon(genisletme(myImage, true), false);
             imageBoxFourthScreen.setIcon(new ImageIcon(myImage.getImage()));
             try {
                 writeImage(myImage.getImage());
@@ -213,7 +213,7 @@ public class MorphologicalOperation extends javax.swing.JFrame {
         }        // TODO add your handling code here:
     }//GEN-LAST:event_MorphologicalOperationsComboboxActionPerformed
 
-    public static MyImage binaryImage(MyImage img, boolean dilateBackgroundPixel) {
+    public static MyImage genisletme(MyImage img, boolean dilateBackgroundPixel) {
         int width = img.getImageWidth();
         int height = img.getImageHeight();
         int output[] = new int[width * height];
@@ -252,7 +252,7 @@ public class MorphologicalOperation extends javax.swing.JFrame {
         return img;
     }
     
-    public static MyImage binaryImageErosion(MyImage img, boolean erodeForegroundPixel) {
+    public static MyImage erozyon(MyImage img, boolean erodeForegroundPixel) {
         int width = img.getImageWidth();
         int height = img.getImageHeight();
         int output[] = new int[width * height];

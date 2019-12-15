@@ -66,6 +66,7 @@ public class SegmentationScreen extends javax.swing.JFrame {
         imageBoxFifthScreen = new javax.swing.JLabel();
         saveButton = new javax.swing.JButton();
         formatCombobox = new javax.swing.JComboBox<>();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -81,6 +82,14 @@ public class SegmentationScreen extends javax.swing.JFrame {
         formatCombobox.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         formatCombobox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Format seç", "PNG", "JPG", "GIF" }));
 
+        jButton1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jButton1.setText("Geri");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -92,6 +101,10 @@ public class SegmentationScreen extends javax.swing.JFrame {
                     .addComponent(saveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 106, Short.MAX_VALUE)
                 .addComponent(imageBoxFifthScreen, javax.swing.GroupLayout.PREFERRED_SIZE, 748, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(431, 431, 431))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -103,7 +116,9 @@ public class SegmentationScreen extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(saveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(imageBoxFifthScreen, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(130, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(48, 48, 48))
         );
 
         pack();
@@ -137,6 +152,15 @@ public class SegmentationScreen extends javax.swing.JFrame {
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_saveButtonActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+       
+            MorphologicalOperation  morphologicalOperation;
+            morphologicalOperation = new MorphologicalOperation("src//image//images//output//fourth.png");
+            morphologicalOperation.setVisible(true);
+            this.setVisible(false);
+              // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -177,6 +201,7 @@ public class SegmentationScreen extends javax.swing.JFrame {
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<String> formatCombobox;
     private javax.swing.JLabel imageBoxFifthScreen;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton saveButton;
     // End of variables declaration//GEN-END:variables
 }

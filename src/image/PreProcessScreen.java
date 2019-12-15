@@ -292,7 +292,7 @@ public class PreProcessScreen extends javax.swing.JFrame {
         if (preProcessComboBox.getSelectedIndex() == 4) {//Resim kırpma
             try {
                 BufferedImage image = ImageIO.read(new File(imagePath));
-                image = cropImage(image, 80, 100, 150, 200);
+                image = cropImage(image, 12, 16, 45, 96);
                 imageBoxSecondScreen.setIcon(new ImageIcon(image));
                 writeImage(image);
 
